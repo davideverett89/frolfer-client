@@ -5,9 +5,6 @@ node_modules
 .vscode/
 package-lock.json
 dist/
-.firebase/
-package-lock.json
-src/helpers/apiKeys.json
 
 
 # local env files
