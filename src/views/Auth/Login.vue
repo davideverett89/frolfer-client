@@ -1,17 +1,17 @@
 <template>
-  <div class="Auth">
-      <h1>Auth</h1>
+  <div class="Login">
+      <h1>Login</h1>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'Auth',
+    name: 'Login',
 }
 </script>
 
 <style>
-.Auth {
+.Login {
     display: block;
 }
 </style>
