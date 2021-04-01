@@ -1,34 +1,42 @@
 <template>
-  <div id="app">
-    <div class="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/auth">Auth</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app
+    id="inspire"
+  >
+    <navbar
+      appTitle="Frolfer App"
+    />
+    <v-main>
+      <v-container>
+        <v-row>
+          <router-view></router-view>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue';
+
 export default {
   name: 'App',
+  components: {
+    Navbar,
+  }
 }
 </script>
 
-<style>
-#app {
+<style lang="scss">
+@import './styles/_variables.scss';
+
+#inspire {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: $primaryColor;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* display: grid;
-  grid-template-columns: auto;
-  padding: 10px; */
 }
 .nav a {
   font-weight: bold;
