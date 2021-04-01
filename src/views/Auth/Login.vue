@@ -1,25 +1,34 @@
 <template>
-    <div class="Login text-left col-6 mx-auto mt-5">
-        <h1 class="display-3 my-5">Login</h1>
-        <v-form
-            ref=form
-            v-model="valid"
-            lazy-validation
-        >
-            <v-text-field
-                v-model="username"
-                :counter="10"
-                :rules="usernameRules"
-                label="Username:"
-                required
-            />
-            <v-text-field
-                v-model="password"
-                label="Password:"
-                required
-            />
-        </v-form>
-    </div>
+    <v-sheet
+        rounded
+        color="white"
+        elevation="15"
+        class="Login text-left col-12 mx-auto mt-5"
+    >
+        <v-card-title>
+            <h1 class="my-5 mr-0">Login</h1>
+        </v-card-title>
+        <v-card-text>
+            <v-form
+                ref=form
+                v-model="valid"
+                lazy-validation
+            >
+                <v-text-field
+                    v-model="username"
+                    :counter="10"
+                    :rules="usernameRules"
+                    label="Username:"
+                    required
+                />
+                <v-text-field
+                    v-model="password"
+                    label="Password:"
+                    required
+                />
+            </v-form>
+        </v-card-text>
+    </v-sheet>
 </template>
 
 <script>
@@ -30,8 +39,8 @@ export default {
             valid: true,
             username: '',
             usernameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+                v => !!v || 'Username is required',
+                v => (v && v.length <= 10) || 'Username must be less than 10 characters',
             ],
             password: '',
         }

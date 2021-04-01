@@ -51,25 +51,28 @@ export default ApiService;
 
 export const AuthenticationService = {
     login: (credentials) => {
-        return ApiService.post('login', credentials)
-            .then(response => {
-                if ("valid" in response && response.valid && "token" in response) {
-                    JwtService.saveToken(response.token);
-                }
-            })
-            .catch(error => {
-                throw new Error(`The following error occurred while logging in: ${error}`)
-            });
+      return ApiService.post('login', credentials)
+        .then(response => {
+            if ("valid" in response && response.valid && "token" in response) {
+                JwtService.saveToken(response.token);
+            }
+        })
+        .catch(error => {
+            throw new Error(`The following error occurred while logging in: ${error}`)
+        });
     },
     register: (credentials) => {
-        return ApiService.post('register', credentials)
-            .then(response => {
-                if ("token" in response) {
-                    JwtService.saveToken(response.token);
-                }
-            })
-            .catch(error => {
-                throw new Error(`The following error occurred while registering: ${error}`)
-            })
+      return ApiService.post('register', credentials)
+        .then(response => {
+            if ("token" in response) {
+                JwtService.saveToken(response.token);
+            }
+        })
+        .catch(error => {
+            throw new Error(`The following error occurred while registering: ${error}`)
+        })
+    },
+    logout: () => {
+      JwtService.destroyToken();
     }
 }

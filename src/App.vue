@@ -1,18 +1,18 @@
 <template>
-  <v-app
-    id="inspire"
-  >
-    <navbar
-      appTitle="Frolfer App"
-    />
-    <v-main>
-      <v-container>
-        <v-row>
-          <router-view></router-view>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+  <div id="app">
+    <v-app>
+      <navbar
+        appTitle="Frolfer App"
+      />
+      <v-main id="main">
+        <!-- <v-container>
+          <v-row> -->
+        <router-view></router-view>
+          <!-- </v-row>
+        </v-container> -->
+      </v-main>
+    </v-app>
+  </div>
 </template>
 
 <script>
@@ -29,20 +29,24 @@ export default {
 <style lang="scss">
 @import './styles/_variables.scss';
 
-#inspire {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   background-color: $primaryColor;
-  height: 100vh;
 }
-.nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-.nav a.router-link-exact-active {
-  color: #42b983;
+
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - var(--ntp-one-google-bar-height));
+  min-width: fit-content;
+  position: relative;
+  z-index: 1;
+
 }
 </style>
