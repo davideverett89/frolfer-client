@@ -21,10 +21,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* display: grid;
+  grid-template-columns: auto;
+  padding: 10px; */
 }
 .nav a {
   font-weight: bold;

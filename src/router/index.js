@@ -9,26 +9,36 @@ import Home from '../views/Home';
 
 Vue.use(VueRouter)
 
+const isAuthenticated = () => true;
+
 const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/auth',
-        name: 'Auth',
         component: Auth,
         children: [
             {
                 path: 'login',
                 name: 'Login',
-                component: Login
+                component: Login,
+                meta: {
+                    requiresAuth: false
+                }
             },
             {
                 path: 'register',
                 name: 'Register',
-                component: Register
+                component: Register,
+                meta: {
+                    requiresAuth: false
+                }
             }
         ]
     }
@@ -36,6 +46,11 @@ const routes = [
 
 const router = new VueRouter({
     routes
-})
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated()) next({ name: 'Login' })
+    else next()
+  })
   
 export default router
