@@ -4,12 +4,12 @@
       <navbar
         appTitle="Frolfer App"
       />
-      <v-main id="main">
-        <!-- <v-container>
-          <v-row> -->
-        <router-view></router-view>
-          <!-- </v-row>
-        </v-container> -->
+      <v-main class="mt-5">
+        <v-container fluid>
+          <v-row no-gutters>
+            <router-view></router-view>
+          </v-row>
+        </v-container>
       </v-main>
     </v-app>
   </div>
@@ -38,15 +38,14 @@ export default {
   background-color: $primaryColor;
 }
 
-#main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - var(--ntp-one-google-bar-height));
-  min-width: fit-content;
-  position: relative;
-  z-index: 1;
+// #content {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-end;
+//   height: calc(100vh - var(--ntp-one-google-bar-height));
+//   min-width: fit-content;
+//   position: relative;
+//   z-index: 1;
 
-}
+// }
 </style>

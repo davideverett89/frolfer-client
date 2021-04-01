@@ -3,35 +3,43 @@
         rounded
         color="white"
         elevation="15"
-        class="Login text-left col-12 mx-auto mt-5"
+        class="Login text-left p-5 col-xl-6 col-lg-9 col-md-9 col-sm-12 col-12 m-auto"
     >
-        <v-card-title>
-            <h1 class="my-5 mr-0">Login</h1>
-        </v-card-title>
-        <v-card-text>
-            <v-form
-                ref=form
-                v-model="valid"
-                lazy-validation
+        <v-form
+            ref=form
+            v-model="valid"
+            lazy-validation
+        >
+            <h1 class="my-5 mr-0">
+                Login
+            </h1>
+            <v-divider></v-divider>
+            <v-text-field
+                v-model="username"
+                :counter="10"
+                :rules="usernameRules"
+                label="Username:"
+                required
+            />
+            <v-text-field
+                type="password"
+                v-model="password"
+                label="Password:"
+                required
+            />
+            <v-btn
+                color="primary"
+                @click="login"
             >
-                <v-text-field
-                    v-model="username"
-                    :counter="10"
-                    :rules="usernameRules"
-                    label="Username:"
-                    required
-                />
-                <v-text-field
-                    v-model="password"
-                    label="Password:"
-                    required
-                />
-            </v-form>
-        </v-card-text>
+                Submit
+            </v-btn>
+        </v-form>
     </v-sheet>
 </template>
 
 <script>
+import { AuthenticationService } from '../../common/api.service';
+
 export default {
     name: 'Login',
     data() {
@@ -45,6 +53,24 @@ export default {
             password: '',
         }
     },
+    methods: {
+        login: (e) => {
+            e.preventDefault();
+            const credentials = {
+                username: this.username,
+                password: this.password
+            };
+            AuthenticationService.login(credentials)
+                .then(respsonse => {
+                    console.log('Login response:', respsonse);
+                    this.$route.push('/');
+                })
+                .catch(error => {
+                    throw new Error(`The following error occurred from the component while loggin in: ${error}`)
+                });
+            console.log('You have logged in!');
+        }
+    }
 }
 </script>
 
