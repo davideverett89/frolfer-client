@@ -3,7 +3,7 @@
         rounded
         color="white"
         elevation="15"
-        class="Login text-left p-5 col-xl-6 col-lg-9 col-md-9 col-sm-12 col-12 m-auto"
+        class="Login text-left p-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 m-auto"
     >
         <v-form
             ref=form
@@ -16,7 +16,7 @@
             <v-divider></v-divider>
             <v-text-field
                 v-model="username"
-                :counter="10"
+                :counter="50"
                 :rules="usernameRules"
                 label="Username:"
                 required
@@ -48,29 +48,28 @@ export default {
             username: '',
             usernameRules: [
                 v => !!v || 'Username is required',
-                v => (v && v.length <= 10) || 'Username must be less than 10 characters',
+                v => (v && v.length <= 50) || 'Username must be less than 10 characters',
             ],
             password: '',
         }
     },
     methods: {
-        login: (e) => {
+        async login(e) {
             e.preventDefault();
             const credentials = {
                 username: this.username,
                 password: this.password
             };
-            AuthenticationService.login(credentials)
-                .then(respsonse => {
-                    console.log('Login response:', respsonse);
-                    this.$route.push('/');
-                })
-                .catch(error => {
-                    throw new Error(`The following error occurred from the component while loggin in: ${error}`)
-                });
-            console.log('You have logged in!');
+            try {
+                await AuthenticationService.login(credentials);
+                this.toggleAuthed();
+                this.$router.push('/');
+            } catch (error) {
+                throw new Error(`The following error occurred from the component when logging in: ${error}`)
+            }
         }
-    }
+    },
+    inject: ['toggleAuthed']
 }
 </script>
 

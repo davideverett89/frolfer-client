@@ -3,7 +3,7 @@
         rounded
         color="white"
         elevation="15"
-        class="Register text-left p-5 col-xl-6 col-lg-9 col-md-9 col-sm-12 col-12 m-auto"
+        class="Register text-left p-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 m-auto"
     >
         <v-form
             ref=form
@@ -85,20 +85,12 @@ export default {
                 password: this.password
             };
             try {
-                const { data } = await AuthenticationService.register(credentials);
-                console.log(data);
+                await AuthenticationService.register(credentials);
                 this.toggleAuthed();
+                this.$router.push('/');
             } catch (error) {
                 throw new Error(`The following error occurred from the component when registering: ${error}`)
             }
-            // AuthenticationService.register(credentials)
-            //     .then(response => {
-            //         console.log('Authentication response', response);
-            //     })
-            //     .catch(error => {
-            //         throw new Error(`The following error occurred from the component when registering: ${error}`)
-            //     });
-            this.$router.push('/');
         }
     },
     inject: ['toggleAuthed']
