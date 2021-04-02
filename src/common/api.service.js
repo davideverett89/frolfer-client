@@ -23,7 +23,7 @@ const ApiService = {
   
     get: async (resource, slug = "") => {
       try {
-        return await axios.get(`${resource}/${slug}`);
+        return await axios.get(`${resource}${slug === "" ? '' : '/'}${slug}`);
       } catch (error) {
         throw new Error(`The following error occurred while fetching: ${error}`);
       }
@@ -88,5 +88,17 @@ export const AuthenticationService = {
     logout: () => {
       JwtService.destroyToken();
     },
-    isAuthenticated: () => JwtService.getToken() !== null && JwtService.getToken() !== undefined
+    isAuthenticated: () => JwtService.getToken() !== null || JwtService.getToken() !== undefined
+}
+
+export const ScoreCardService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('home');
+      console.log(data);
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while getting all score cards: ${error}`)
+    }
+  }
 }
