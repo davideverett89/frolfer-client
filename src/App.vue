@@ -1,39 +1,64 @@
 <template>
   <div id="app">
-    <div class="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/auth">Auth</router-link>
-    </div>
-    <router-view></router-view>
+    <v-app>
+      <navbar
+        appTitle="Frolfer App"
+        :authed="authed"
+      />
+      <v-main class="mt-5">
+        <v-container fluid>
+          <v-row no-gutters>
+            <router-view></router-view>
+          </v-row>
+        </v-container>
+      </v-main>
+    </v-app>
   </div>
 </template>
 
 <script>
+import { AuthenticationService } from './common/api.service';
+
+import Navbar from './components/Navbar.vue';
+
 export default {
   name: 'App',
+  components: {
+    Navbar,
+  },
+  data() {
+    return {
+      authed: false
+    }
+  },
+  mounted() {
+    this.checkAuthentication();
+  },
+  methods: {
+    toggleAuthed() {
+      this.authed = !this.authed
+    },
+    checkAuthentication() {
+      this.authed = AuthenticationService.isAuthenticated()
+    }
+  },
+  provide() {
+    return {
+      toggleAuthed: this.toggleAuthed,
+    }
+  },
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './styles/_variables.scss';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#nav {
-  padding: 30px;
-}
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-#nav a.router-link-exact-active {
-  color: #42b983;
+  background-color: $primaryColor;
 }
 </style>

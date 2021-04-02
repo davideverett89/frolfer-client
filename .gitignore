@@ -5,6 +5,7 @@ node_modules
 .vscode/
 package-lock.json
 dist/
+src/common/config.js
 
 
 # local env files
