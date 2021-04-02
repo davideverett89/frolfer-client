@@ -13,66 +13,82 @@ const ApiService = {
       ] = `Token ${JwtService.getToken()}`;
     },
   
-    query: (resource, params) => {
-      return axios.get(resource, params)
-        .catch(error => {
-            throw new Error(`The following error occurred while fetching: ${error}`);
-        });
+    query: async (resource, params) => {
+      try {
+        return await axios.get(resource, params);
+      } catch (error) {
+        throw new Error(`The following error occurred while fetching: ${error}`);
+      }
     },
   
-    get: (resource, slug = "") => {
-      return axios.get(`${resource}/${slug}`)
-        .catch(error => {
-            throw new Error(`The following error occurred while fetching: ${error}`);
-        });
+    get: async (resource, slug = "") => {
+      try {
+        return await axios.get(`${resource}/${slug}`);
+      } catch (error) {
+        throw new Error(`The following error occurred while fetching: ${error}`);
+      }
     },
   
-    post: (resource, payload) => {
-      return axios.post(`${resource}`, payload);
+    post: async (resource, payload) => {
+      try {
+        return await axios.post(`${resource}`, payload);
+      } catch (error) {
+        throw new Error(`The following error occurred while posting: ${error}`)
+      }
     },
   
-    update: (resource, slug, payload) => {
-      return axios.put(`${resource}/${slug}`, payload);
+    update: async (resource, slug, payload) => {
+      try {
+        return await axios.put(`${resource}/${slug}`, payload);
+      } catch (error) {
+        throw new Error(`The following error occurred while updating: ${error}`)
+      }
     },
   
-    put: (resource, payload) => {
-      return axios.put(`${resource}`, payload);
+    put: async (resource, payload) => {
+      try {
+        return await axios.put(`${resource}`, payload);
+      } catch (error) {
+        throw new Error(`The following error occurred while putting: ${error}`)
+      }
     },
   
-    delete: (resource) => {
-      return axios.delete(resource)
-        .catch(error => {
-            throw new Error(`The following error occurred while deleting: ${error}`);
-        });
+    delete: async (resource) => {
+      try {
+        return await axios.delete(resource);
+      } catch (error) {
+        throw new Error(`The following error occurred while deleting: ${error}`);
+      }
     }
 };
   
 export default ApiService;
 
 export const AuthenticationService = {
-    login: (credentials) => {
-      return ApiService.post('login', credentials)
-        .then(response => {
-            if ("valid" in response && response.valid && "token" in response) {
-                JwtService.saveToken(response.token);
-            }
-        })
-        .catch(error => {
-            throw new Error(`The following error occurred while logging in: ${error}`)
-        });
+    login: async (credentials) => {
+      try {
+      const response = await ApiService.post('login', credentials);
+      if ("valid" in response.data && response.data.valid && "token" in response.data) {
+        JwtService.saveToken(response.token);
+        return response;
+      }
+    } catch (error) {
+      throw new Error(`The following error occurred while logging in: ${error}`);
+    }
     },
-    register: (credentials) => {
-      return ApiService.post('register', credentials)
-        .then(response => {
-            if ("token" in response) {
-                JwtService.saveToken(response.token);
-            }
-        })
-        .catch(error => {
-            throw new Error(`The following error occurred while registering: ${error}`)
-        })
+    register: async (credentials) => {
+      try {
+        const response = await ApiService.post('register', credentials);
+        if ("token" in response.data) {
+          JwtService.saveToken(response.data.token);
+          return response;
+        }
+      } catch (error) {
+        throw new Error(`The following error occurred while registering: ${error}`);
+      }
     },
     logout: () => {
       JwtService.destroyToken();
-    }
+    },
+    isAuthenticated: () => JwtService.getToken() !== null
 }

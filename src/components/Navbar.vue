@@ -7,18 +7,54 @@
             elevation="15"
         >
             <v-list>
-                <v-list-item
-                    v-for="item in menuItems"
-                    :key="item.title"
-                    :to="item.path">
+                <v-list-item v-if="authed" to="/">
                     <v-list-item-action>
                         <v-icon>
-                            {{ item.icon }}
+                            fas fa-home
                         </v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
-                            {{ item.title }}
+                            Home
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item v-if="!authed" to="/login">
+                    <v-list-item-action>
+                        <v-icon>
+                            fas fa-lock-open
+                        </v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Login
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item v-if="!authed" to="/register">
+                    <v-list-item-action>
+                        <v-icon>
+                            fas fa-user-plus
+                        </v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Register
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                    v-if="authed"
+                    to="/logout"
+                >
+                    <v-list-item-action>
+                        <v-icon>
+                            fas fa-sign-out-alt
+                        </v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Logout
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
@@ -40,13 +76,44 @@
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-xs-only px-0">
                 <v-btn
+                    v-if="authed"
                     text
-                    v-for="item in menuItems"
-                    :key="item.title"
-                    :to="item.path"
+                    to="/"
                 >
-                    <v-icon left dark>{{ item.icon }}</v-icon>
-                    {{ item.title }}
+                    <v-icon left dark>
+                        fas fa-home
+                    </v-icon>
+                    Home
+                </v-btn>
+                <v-btn
+                    v-if="!authed"
+                    text
+                    to="/login"
+                >
+                    <v-icon left dark>
+                        fas fa-lock-open
+                    </v-icon>
+                    Login
+                </v-btn>
+                <v-btn
+                    v-if="!authed"
+                    text
+                    to="/register"
+                >
+                    <v-icon left dark>
+                        fas fa-user-plus
+                    </v-icon>
+                    Register
+                </v-btn>
+                <v-btn
+                    v-if="authed"
+                    text
+                    to="/logout"
+                >
+                    <v-icon left dark>
+                        fas fa-sign-out-alt
+                    </v-icon>
+                    Logout
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>
@@ -60,30 +127,17 @@ export default {
         appTitle: {
             type: String,
             default: ''
+        },
+        authed: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
-            sidebar: false,
-            menuItems: [
-                {
-                    title: 'Home',
-                    path: '/',
-                    icon: 'fas fa-home'
-                },
-                {
-                    title: 'Login',
-                    path: '/login',
-                    icon: 'fas fa-lock-open'
-                },
-                {
-                    title: 'Register',
-                    path: '/register',
-                    icon: 'fas fa-user-plus'
-                }
-            ]
+            sidebar: false
         }
-    },
+    }
 }
 </script>
 

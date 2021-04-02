@@ -75,7 +75,7 @@ export default {
         }
     },
     methods: {
-        register(e) {
+        async register(e) {
             e.preventDefault();
             const credentials = {
                 first_name: this.firstName,
@@ -84,16 +84,24 @@ export default {
                 username: this.username,
                 password: this.password
             };
-            AuthenticationService.register(credentials)
-                .then(response => {
-                    console.log('Authentication response', response);
-                    this.$route.push('/');
-                })
-                .catch(error => {
-                    throw new Error(`The following error occurred from the component when registering: ${error}`)
-                });
+            try {
+                const { data } = await AuthenticationService.register(credentials);
+                console.log(data);
+                this.toggleAuthed();
+            } catch (error) {
+                throw new Error(`The following error occurred from the component when registering: ${error}`)
+            }
+            // AuthenticationService.register(credentials)
+            //     .then(response => {
+            //         console.log('Authentication response', response);
+            //     })
+            //     .catch(error => {
+            //         throw new Error(`The following error occurred from the component when registering: ${error}`)
+            //     });
+            this.$router.push('/');
         }
-    }
+    },
+    inject: ['toggleAuthed']
 }
 </script>
 

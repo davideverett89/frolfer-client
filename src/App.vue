@@ -3,6 +3,7 @@
     <v-app>
       <navbar
         appTitle="Frolfer App"
+        :authed="authed"
       />
       <v-main class="mt-5">
         <v-container fluid>
@@ -16,13 +17,36 @@
 </template>
 
 <script>
+import { AuthenticationService } from './common/api.service';
+
 import Navbar from './components/Navbar.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
-  }
+  },
+  data() {
+    return {
+      authed: false
+    }
+  },
+  mounted() {
+    this.checkAuthentication();
+  },
+  methods: {
+    toggleAuthed() {
+      this.authed = !this.authed
+    },
+    checkAuthentication() {
+      this.authed = AuthenticationService.isAuthenticated()
+    }
+  },
+  provide() {
+    return {
+      toggleAuthed: this.toggleAuthed,
+    }
+  },
 }
 </script>
 
@@ -37,15 +61,4 @@ export default {
   color: #2c3e50;
   background-color: $primaryColor;
 }
-
-// #content {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-end;
-//   height: calc(100vh - var(--ntp-one-google-bar-height));
-//   min-width: fit-content;
-//   position: relative;
-//   z-index: 1;
-
-// }
 </style>
