@@ -87,7 +87,6 @@ export default {
             try {
                 await AuthenticationService.register(credentials);
                 this.toggleAuthed();
-                this.$router.push('/');
             } catch (error) {
                 throw new Error(`The following error occurred from the component when registering: ${error}`)
             }

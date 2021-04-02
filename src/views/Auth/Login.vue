@@ -10,6 +10,13 @@
             v-model="valid"
             lazy-validation
         >
+            <v-alert
+                v-model="alert"
+                type="error"
+                dismissible
+            >
+                {{ error }}
+            </v-alert>
             <h1 class="my-5 mr-0">
                 Login
             </h1>
@@ -19,12 +26,14 @@
                 :counter="50"
                 :rules="usernameRules"
                 label="Username:"
+                :error="alert"
                 required
             />
             <v-text-field
                 type="password"
                 v-model="password"
                 label="Password:"
+                :error="alert"
                 required
             />
             <v-btn
@@ -51,6 +60,8 @@ export default {
                 v => (v && v.length <= 50) || 'Username must be less than 10 characters',
             ],
             password: '',
+            error: '',
+            alert: false,
         }
     },
     methods: {
@@ -61,12 +72,25 @@ export default {
                 password: this.password
             };
             try {
-                await AuthenticationService.login(credentials);
-                this.toggleAuthed();
-                this.$router.push('/');
+                const { valid } = await AuthenticationService.login(credentials);
+                if (valid) {
+                    this.toggleAuthed();
+                } else {
+                    this.handleLoginError();
+                }
             } catch (error) {
                 throw new Error(`The following error occurred from the component when logging in: ${error}`)
             }
+        },
+        delay(t) { 
+            return new Promise((resolve) => setTimeout(resolve, t))
+        },
+        async handleLoginError() {
+            this.alert = true;
+            this.error = 'Incorrect login credentials were provided.';
+            await this.delay(5000);
+            this.alert = false;
+            this.error = '';
         }
     },
     inject: ['toggleAuthed']

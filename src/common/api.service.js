@@ -71,6 +71,7 @@ export const AuthenticationService = {
       if ("valid" in data && data.valid && "token" in data) {
         JwtService.saveToken(data.token);
       }
+      return data;
     } catch (error) {
       throw new Error(`The following error occurred while logging in: ${error}`);
     }
@@ -88,7 +89,7 @@ export const AuthenticationService = {
     logout: () => {
       JwtService.destroyToken();
     },
-    isAuthenticated: () => JwtService.getToken() !== null || JwtService.getToken() !== undefined
+    isAuthenticated: () => JwtService.getToken() !== null
 }
 
 export const ScoreCardService = {

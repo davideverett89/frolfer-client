@@ -37,6 +37,7 @@ export default {
   methods: {
     toggleAuthed() {
       this.authed = !this.authed
+      if (this.authed) this.$router.push('/');
     },
     checkAuthentication() {
       this.authed = AuthenticationService.isAuthenticated()
