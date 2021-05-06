@@ -21,9 +21,9 @@ const ApiService = {
       }
     },
   
-    get: async (resource, slug = "") => {
+    get: async (resource, slug = '') => {
       try {
-        return await axios.get(`${resource}/${slug}`);
+        return await axios.get(`${resource}${slug === '' ? '' : '/'}${slug}`);
       } catch (error) {
         throw new Error(`The following error occurred while fetching: ${error}`);
       }

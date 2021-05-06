@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import { FETCH_SCORECARDS } from '../store/actions.type'
+import { createNamespacedHelpers } from 'vuex';
+import { FETCH_SCORECARDS } from '../store/actions.type';
 
-const { mapActions, mapGetters } = createNamespacedHelpers('home')
+const { mapActions, mapGetters } = createNamespacedHelpers('home');
 
 export default {
     name: 'Home',
