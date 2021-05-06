@@ -1,6 +1,6 @@
-import { ScorecardService } from '../common/api.service';
-import { FETCH_SCORECARDS } from './actions.type';
-import { SET_SCORECARDS } from './mutations.type';
+import { ScorecardService } from '../../common/api.service';
+import { FETCH_SCORECARDS } from '../actions.type';
+import { SET_SCORECARDS } from '../mutations.type';
 
 const home = {
     namespaced: true,
@@ -29,4 +29,4 @@ const home = {
     }
 }
 
-export default home
+export default home;
