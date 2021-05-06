@@ -90,3 +90,15 @@ export const AuthenticationService = {
     },
     isAuthenticated: () => JwtService.getToken() !== null && JwtService.getToken() !== undefined
 }
+
+export const ScorecardService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('home');
+      console.log(data);
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while getting all score cards: ${error}`)
+    }
+  }
+}
