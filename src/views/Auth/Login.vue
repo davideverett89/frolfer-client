@@ -29,7 +29,7 @@
             />
             <v-btn
                 color="primary"
-                @click="login"
+                @click="onSubmit"
             >
                 Submit
             </v-btn>
@@ -38,7 +38,11 @@
 </template>
 
 <script>
-import { AuthenticationService } from '../../common/api.service';
+import { createNamespacedHelpers } from 'vuex';
+
+import { LOGIN } from '../../store/actions.type';
+
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
     name: 'Login',
@@ -54,22 +58,19 @@ export default {
         }
     },
     methods: {
-        async login(e) {
+        ...mapActions({
+            login: LOGIN
+        }),
+        async onSubmit(e) {
             e.preventDefault();
             const credentials = {
                 username: this.username,
                 password: this.password
             };
-            try {
-                await AuthenticationService.login(credentials);
-                this.toggleAuthed();
-                this.$router.push('/');
-            } catch (error) {
-                throw new Error(`The following error occurred from the component when logging in: ${error}`)
-            }
+            await this.login(credentials);
+            this.$router.push('/');
         }
     },
-    inject: ['toggleAuthed']
 }
 </script>
 

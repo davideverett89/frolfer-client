@@ -7,7 +7,7 @@
             elevation="15"
         >
             <v-list>
-                <v-list-item v-if="authed" to="/">
+                <v-list-item v-if="isAuthenticated" to="/">
                     <v-list-item-action>
                         <v-icon>
                             fas fa-home
@@ -19,7 +19,7 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item v-if="!authed" to="/login">
+                <v-list-item v-if="!isAuthenticated" to="/login">
                     <v-list-item-action>
                         <v-icon>
                             fas fa-lock-open
@@ -31,7 +31,7 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item v-if="!authed" to="/register">
+                <v-list-item v-if="!isAuthenticated" to="/register">
                     <v-list-item-action>
                         <v-icon>
                             fas fa-user-plus
@@ -44,7 +44,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
-                    v-if="authed"
+                    v-if="isAuthenticated"
                     to="/logout"
                 >
                     <v-list-item-action>
@@ -76,7 +76,7 @@
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-xs-only px-0">
                 <v-btn
-                    v-if="authed"
+                    v-if="isAuthenticated"
                     text
                     to="/"
                 >
@@ -86,7 +86,7 @@
                     Home
                 </v-btn>
                 <v-btn
-                    v-if="!authed"
+                    v-if="!isAuthenticated"
                     text
                     to="/login"
                 >
@@ -96,7 +96,7 @@
                     Login
                 </v-btn>
                 <v-btn
-                    v-if="!authed"
+                    v-if="!isAuthenticated"
                     text
                     to="/register"
                 >
@@ -106,7 +106,7 @@
                     Register
                 </v-btn>
                 <v-btn
-                    v-if="authed"
+                    v-if="isAuthenticated"
                     text
                     to="/logout"
                 >
@@ -121,6 +121,10 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapGetters } = createNamespacedHelpers('auth');
+
 export default {
     name: 'Navbar',
     props: {
@@ -128,15 +132,14 @@ export default {
             type: String,
             default: ''
         },
-        authed: {
-            type: Boolean,
-            default: false
-        }
     },
     data() {
         return {
             sidebar: false
         }
+    },
+    computed: {
+        ...mapGetters(['isAuthenticated'])
     }
 }
 </script>

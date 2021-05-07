@@ -5,8 +5,24 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+import { FETCH_SCORECARDS } from '../store/actions.type';
+
+const { mapActions, mapGetters } = createNamespacedHelpers('home');
+
 export default {
     name: 'Home',
+    mounted() {
+        this.fetchScorecards();
+    },
+    methods: {
+        ...mapActions({
+            fetchScorecards: FETCH_SCORECARDS
+        }),
+    },
+    computed: {
+        ...mapGetters(['scorecards'])
+    }
 }
 </script>
 
