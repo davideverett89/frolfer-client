@@ -47,7 +47,7 @@
             />
             <v-btn
                 color="primary"
-                @click="register"
+                @click="onSubmit"
             >
                 Create Account
             </v-btn>
@@ -56,7 +56,11 @@
 </template>
 
 <script>
-import { AuthenticationService } from '../../common/api.service';
+import { createNamespacedHelpers } from 'vuex';
+
+import { REGISTER } from '../../store/actions.type';
+
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
     name: 'Register',
@@ -75,7 +79,10 @@ export default {
         }
     },
     methods: {
-        async register(e) {
+        ...mapActions({
+            register: REGISTER
+        }),
+        onSubmit(e) {
             e.preventDefault();
             const credentials = {
                 first_name: this.firstName,
@@ -84,16 +91,10 @@ export default {
                 username: this.username,
                 password: this.password
             };
-            try {
-                await AuthenticationService.register(credentials);
-                this.toggleAuthed();
-                this.$router.push('/');
-            } catch (error) {
-                throw new Error(`The following error occurred from the component when registering: ${error}`)
-            }
+            this.register(credentials);
+            this.$router.push('/');
         }
-    },
-    inject: ['toggleAuthed']
+    }
 }
 </script>
 

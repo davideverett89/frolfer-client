@@ -39,7 +39,6 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-// import { AuthenticationService } from '../../common/api.service';
 
 import { LOGIN } from '../../store/actions.type';
 
@@ -69,16 +68,9 @@ export default {
                 password: this.password
             };
             this.login(credentials);
-            // try {
-            //     await AuthenticationService.login(credentials);
-            //     this.toggleAuthed();
-            //     this.$router.push('/');
-            // } catch (error) {
-            //     throw new Error(`The following error occurred from the component when logging in: ${error}`)
-            // }
+            this.$router.push('/');
         }
     },
-    inject: ['toggleAuthed']
 }
 </script>
 

@@ -10,15 +10,22 @@
 </template>
 
 <script>
-import { AuthenticationService } from '../../common/api.service';
+import { createNamespacedHelpers } from 'vuex';
+
+import { LOGOUT} from '../../store/actions.type';
+
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
     name: 'Logout',
     created() {
-        AuthenticationService.logout();
-        this.toggleAuthed()
+        this.logout();
     },
-    inject: ['toggleAuthed']
+    methods: {
+        ...mapActions({
+            logout: LOGOUT
+        })
+    }
 }
 </script>
 

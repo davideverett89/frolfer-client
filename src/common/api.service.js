@@ -7,7 +7,7 @@ const ApiService = {
         axios.defaults.baseURL = API_URL;
     }, 
 
-    setHeaders: () => {
+    setHeader: () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Token ${JwtService.getToken()}`;
@@ -81,6 +81,7 @@ export const AuthenticationService = {
         const { data } = await ApiService.post('register', credentials);
         if ("token" in data) {
           JwtService.saveToken(data.token);
+          return data.user;
         }
       } catch (error) {
         throw new Error(`The following error occurred while registering: ${error}`);
