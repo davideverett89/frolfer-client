@@ -61,13 +61,13 @@ export default {
         ...mapActions({
             login: LOGIN
         }),
-        onSubmit(e) {
+        async onSubmit(e) {
             e.preventDefault();
             const credentials = {
                 username: this.username,
                 password: this.password
             };
-            this.login(credentials);
+            await this.login(credentials);
             this.$router.push('/');
         }
     },

@@ -82,7 +82,7 @@ export default {
         ...mapActions({
             register: REGISTER
         }),
-        onSubmit(e) {
+        async onSubmit(e) {
             e.preventDefault();
             const credentials = {
                 first_name: this.firstName,
@@ -91,7 +91,7 @@ export default {
                 username: this.username,
                 password: this.password
             };
-            this.register(credentials);
+            await this.register(credentials);
             this.$router.push('/');
         }
     }

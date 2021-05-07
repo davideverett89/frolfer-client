@@ -13,11 +13,12 @@ const auth  = {
     mutations: {
         [SET_AUTH](state, payload) {
             state.user = payload;
+            state.isAuthenticated = true;
         },
         [PURGE_AUTH](state) {
             state.isAuthenticated = false;
             state.user = {};
-            state.errors = {};
+            state.errors = null;
             AuthenticationService.logout();
         }
     },
@@ -42,7 +43,7 @@ const auth  = {
         },
         async [LOGOUT]({ commit }) {
             commit(PURGE_AUTH);
-        },
+        }
     },
     getters: {
         currentUser(state) {
