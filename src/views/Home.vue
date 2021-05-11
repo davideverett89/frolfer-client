@@ -3,7 +3,7 @@
         <v-container>
             <v-row>
                 <v-col
-                    v-for="(card, index) in scoreCards"
+                    v-for="(card, index) in scorecards"
                     :key="index"
                 >
                     <v-card>
