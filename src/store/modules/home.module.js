@@ -18,7 +18,7 @@ const home = {
                 const { data } = await ScorecardService.getAll();
                 commit(SET_SCORECARDS, data);
             } catch(error) {
-                throw new Error(`The following error occured in the store while fetching Scorecards: ${error}`);
+                throw new Error(`The following error occurred in the store while fetching scorecards: ${error}`);
             }
         }
     },

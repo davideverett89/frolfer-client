@@ -31,8 +31,8 @@
                     color="grey lighten-1"
                     height="200px"
                 >
-                    <RadioButtonGroup 
-                    />
+                    <!-- <RadioButtonGroup 
+                    /> -->
                 </v-card>
 
                 <v-btn
@@ -89,17 +89,20 @@
 </template>
 
 <script>
-import RadioButtonGroup from '../components/RadioButtonGroup';
+// import RadioButtonGroup from '../components/RadioButtonGroup';
 
 export default {
     name: 'ScorecardForm',
     components: {
-        RadioButtonGroup
+        // RadioButtonGroup
     },
     data() {
         return {
             e1: 1
         }
+    },
+    created() {
+
     }
 }
 </script>

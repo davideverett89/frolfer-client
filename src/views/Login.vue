@@ -10,17 +10,14 @@
             v-model="valid"
             lazy-validation
         >
-            <v-alert
-                v-model="alert"
-                type="error"
-                dismissible
-            >
-                {{ error }}
-            </v-alert>
             <h1 class="my-5 mr-0">
                 Login
             </h1>
-            <v-alert v-if="errors" type="error">
+            <v-alert
+                v-if="errors"
+                type="error"
+                dismissible
+            >
                 {{ errors }}
             </v-alert>
             <v-divider></v-divider>
@@ -67,6 +64,7 @@ export default {
                 v => (v && v.length <= 50) || 'Username must be less than 10 characters',
             ],
             password: '',
+            alert: false
         }
     },
     methods: {
