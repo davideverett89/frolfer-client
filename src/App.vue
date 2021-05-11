@@ -3,7 +3,6 @@
     <v-app>
       <navbar
         appTitle="Frolfer App"
-        :authed="authed"
       />
       <v-main class="mt-5">
         <v-container fluid>
@@ -17,6 +16,10 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapGetters } = createNamespacedHelpers('auth'); 
+
 import { AuthenticationService } from './common/api.service';
 
 import Navbar from './components/Navbar.vue';
@@ -43,11 +46,9 @@ export default {
       this.authed = AuthenticationService.isAuthenticated()
     }
   },
-  provide() {
-    return {
-      toggleAuthed: this.toggleAuthed,
-    }
-  },
+  computed: {
+    ...mapGetters(['isAuthenticated'])
+  }
 }
 </script>
 

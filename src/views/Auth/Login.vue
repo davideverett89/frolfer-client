@@ -20,6 +20,9 @@
             <h1 class="my-5 mr-0">
                 Login
             </h1>
+            <v-alert v-if="errors" type="error">
+                {{ errors }}
+            </v-alert>
             <v-divider></v-divider>
             <v-text-field
                 v-model="username"
@@ -38,7 +41,7 @@
             />
             <v-btn
                 color="primary"
-                @click="login"
+                @click="onSubmit"
             >
                 Submit
             </v-btn>
@@ -47,7 +50,11 @@
 </template>
 
 <script>
-import { AuthenticationService } from '../../common/api.service';
+import { createNamespacedHelpers } from 'vuex';
+
+import { LOGIN } from '../../store/actions.type';
+
+const { mapActions, mapGetters } = createNamespacedHelpers('auth');
 
 export default {
     name: 'Login',
@@ -65,12 +72,16 @@ export default {
         }
     },
     methods: {
-        async login(e) {
+        ...mapActions({
+            login: LOGIN
+        }),
+        async onSubmit(e) {
             e.preventDefault();
             const credentials = {
                 username: this.username,
                 password: this.password
             };
+<<<<<<< HEAD
             try {
                 const { valid } = await AuthenticationService.login(credentials);
                 if (valid) {
@@ -80,6 +91,11 @@ export default {
                 }
             } catch (error) {
                 throw new Error(`The following error occurred from the component when logging in: ${error}`)
+=======
+            await this.login(credentials);
+            if (!this.errors) {
+                this.$router.push('/')
+>>>>>>> main
             }
         },
         delay(t) { 
@@ -93,7 +109,9 @@ export default {
             this.error = '';
         }
     },
-    inject: ['toggleAuthed']
+    computed: {
+        ...mapGetters(['errors'])
+    }
 }
 </script>
 

@@ -24,28 +24,23 @@
 </template>
 
 <script>
-import { ScoreCardService } from '../common/api.service';
+import { createNamespacedHelpers } from 'vuex';
+import { FETCH_SCORECARDS } from '../store/actions.type';
+
+const { mapActions, mapGetters } = createNamespacedHelpers('home');
 
 export default {
     name: 'Home',
-    data() {
-        return {
-            scoreCards: []
-        }
+    mounted() {
+        this.fetchScorecards();
     },
     methods: {
-        async getData() {
-            try {
-                const { data } = ScoreCardService.getAll();
-                this.scoreCards = data;
-                console.log('Success');
-            } catch (error) {
-                throw new Error(`The following error occurred from the component when getting all score cards: ${error}`)
-            }
-        }
+        ...mapActions({
+            fetchScorecards: FETCH_SCORECARDS
+        }),
     },
-    mounted() {
-        this.getData();
+    computed: {
+        ...mapGetters(['scorecards'])
     }
 }
 </script>

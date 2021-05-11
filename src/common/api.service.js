@@ -7,7 +7,7 @@ const ApiService = {
         axios.defaults.baseURL = API_URL;
     }, 
 
-    setHeaders: () => {
+    setHeader: () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Token ${JwtService.getToken()}`;
@@ -21,9 +21,9 @@ const ApiService = {
       }
     },
   
-    get: async (resource, slug = "") => {
+    get: async (resource, slug = '') => {
       try {
-        return await axios.get(`${resource}${slug === "" ? '' : '/'}${slug}`);
+        return await axios.get(`${resource}${slug === '' ? '' : '/'}${slug}`);
       } catch (error) {
         throw new Error(`The following error occurred while fetching: ${error}`);
       }
@@ -82,6 +82,7 @@ export const AuthenticationService = {
         if ("token" in data) {
           JwtService.saveToken(data.token);
         }
+        return data;
       } catch (error) {
         throw new Error(`The following error occurred while registering: ${error}`);
       }
@@ -89,13 +90,13 @@ export const AuthenticationService = {
     logout: () => {
       JwtService.destroyToken();
     },
-    isAuthenticated: () => JwtService.getToken() !== null
+    isAuthenticated: () => JwtService.getToken() !== null && JwtService.getToken() !== undefined
 }
 
-export const ScoreCardService = {
+export const ScorecardService = {
   getAll: async () => {
     try {
-      const { data } = await ApiService.get('home');
+      const { data } = await ApiService.get('score_cards');
       console.log(data);
       return data;
     } catch (error) {
