@@ -1,7 +1,7 @@
 import { AuthenticationService } from "@/common/api.service";
 import JwtService from "@/common/jwt.service";
 import { LOGIN, REGISTER, LOGOUT } from '../actions.type';
-import { SET_AUTH, SET_ERROR, PURGE_AUTH } from '../mutations.type';
+import { SET_AUTH, SET_ERRORS, PURGE_AUTH } from '../mutations.type';
 
 const auth  = {
     namespaced: true,
@@ -20,24 +20,41 @@ const auth  = {
             state.user = {};
             state.errors = null;
             AuthenticationService.logout();
+        },
+        [SET_ERRORS](state, payload) {
+            state.errors = payload;
         }
     },
     actions: {
         async [LOGIN]({ commit }, payload) {
             try {
-                const user = await AuthenticationService.login(payload);
-                commit(SET_AUTH, user);
+                const data = await AuthenticationService.login(payload);
+                if (data.valid) {
+                    commit(SET_AUTH, data.user);
+                } else {
+                    commit(SET_ERRORS, 'Login attempt failed.');
+                    setTimeout(() => {
+                        commit(SET_ERRORS, '');
+                    }, 5000);
+                }
             } catch(error) {
-                commit(SET_ERROR, error);
+                commit(SET_ERRORS, error);
                 throw new Error(`The following error occurred when logging in: ${error}`);
             }
         },
         async [REGISTER]({ commit }, payload) {
             try {
-                const user = await AuthenticationService.register(payload);
-                commit(SET_AUTH, user);
+                const data = await AuthenticationService.register(payload);
+                if (data.valid) {
+                    commit(SET_AUTH, data.user);
+                } else {
+                    commit(SET_ERRORS, 'Registration attempt failed.');
+                    setTimeout(() => {
+                        commit(SET_ERRORS, '');
+                    }, 5000);
+                }
             } catch(error) {
-                commit(SET_ERROR, error);
+                commit(SET_ERRORS, error);
                 throw new Error(`The following error occurred when registering: ${error}`);
             }
         },
@@ -51,7 +68,10 @@ const auth  = {
         },
         isAuthenticated(state) {
           return state.isAuthenticated;
-        }
+        },
+        errors(state) {
+            return state.errors;
+        },
     }
 }
 

@@ -13,6 +13,9 @@
             <h1 class="my-5 mr-0">
                 Register
             </h1>
+            <v-alert v-if="errors" type="error">
+                {{ errors }}
+            </v-alert>
             <v-divider></v-divider>
             <v-text-field
                 v-model="firstName"
@@ -60,7 +63,7 @@ import { createNamespacedHelpers } from 'vuex';
 
 import { REGISTER } from '../../store/actions.type';
 
-const { mapActions } = createNamespacedHelpers('auth');
+const { mapActions, mapGetters } = createNamespacedHelpers('auth');
 
 export default {
     name: 'Register',
@@ -92,8 +95,13 @@ export default {
                 password: this.password
             };
             await this.register(credentials);
-            this.$router.push('/');
+            if (!this.errors) {
+                this.$router.push('/')
+            }
         }
+    },
+    computed: {
+        ...mapGetters(['errors'])
     }
 }
 </script>
