@@ -13,6 +13,9 @@
             <h1 class="my-5 mr-0">
                 Login
             </h1>
+            <v-alert v-if="errors" type="error">
+                {{ errors }}
+            </v-alert>
             <v-divider></v-divider>
             <v-text-field
                 v-model="username"
@@ -42,7 +45,7 @@ import { createNamespacedHelpers } from 'vuex';
 
 import { LOGIN } from '../../store/actions.type';
 
-const { mapActions } = createNamespacedHelpers('auth');
+const { mapActions, mapGetters } = createNamespacedHelpers('auth');
 
 export default {
     name: 'Login',
@@ -68,9 +71,16 @@ export default {
                 password: this.password
             };
             await this.login(credentials);
-            this.$router.push('/');
+            if (this.errors) {
+                console.log('Errors?:', this.errors);
+            } else {
+                this.$router.push('/')
+            }
         }
     },
+    computed: {
+        ...mapGetters(['errors'])
+    }
 }
 </script>
 

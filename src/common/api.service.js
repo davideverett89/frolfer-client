@@ -70,8 +70,8 @@ export const AuthenticationService = {
       const { data } = await ApiService.post('login', credentials);
       if ("valid" in data && data.valid && "token" in data) {
         JwtService.saveToken(data.token);
-        return data.user;
       }
+      return data;
     } catch (error) {
       throw new Error(`The following error occurred while logging in: ${error}`);
     }
@@ -81,8 +81,8 @@ export const AuthenticationService = {
         const { data } = await ApiService.post('register', credentials);
         if ("token" in data) {
           JwtService.saveToken(data.token);
-          return data.user;
         }
+        return data;
       } catch (error) {
         throw new Error(`The following error occurred while registering: ${error}`);
       }
@@ -96,7 +96,7 @@ export const AuthenticationService = {
 export const ScorecardService = {
   getAll: async () => {
     try {
-      const { data } = await ApiService.get('home');
+      const { data } = await ApiService.get('score_cards');
       console.log(data);
       return data;
     } catch (error) {
