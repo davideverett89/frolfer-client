@@ -29,12 +29,13 @@ const auth  = {
         async [LOGIN]({ commit }, payload) {
             try {
                 const data = await AuthenticationService.login(payload);
-                console.log(data)
                 if (data.valid) {
-                    console.log('valid');
-                    commit(SET_AUTH, data);
+                    commit(SET_AUTH, data.user);
                 } else {
                     commit(SET_ERRORS, 'Login attempt failed.');
+                    setTimeout(() => {
+                        commit(SET_ERRORS, '');
+                    }, 5000);
                 }
             } catch(error) {
                 commit(SET_ERRORS, error);
@@ -43,8 +44,15 @@ const auth  = {
         },
         async [REGISTER]({ commit }, payload) {
             try {
-                const user = await AuthenticationService.register(payload);
-                commit(SET_AUTH, user);
+                const data = await AuthenticationService.register(payload);
+                if (data.valid) {
+                    commit(SET_AUTH, data.user);
+                } else {
+                    commit(SET_ERRORS, 'Registration attempt failed.');
+                    setTimeout(() => {
+                        commit(SET_ERRORS, '');
+                    }, 5000);
+                }
             } catch(error) {
                 commit(SET_ERRORS, error);
                 throw new Error(`The following error occurred when registering: ${error}`);
@@ -63,7 +71,7 @@ const auth  = {
         },
         errors(state) {
             return state.errors;
-        }
+        },
     }
 }
 

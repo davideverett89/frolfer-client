@@ -71,9 +71,7 @@ export default {
                 password: this.password
             };
             await this.login(credentials);
-            if (this.errors) {
-                console.log('Errors?:', this.errors);
-            } else {
+            if (!this.errors) {
                 this.$router.push('/')
             }
         }
