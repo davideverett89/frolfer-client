@@ -81,21 +81,9 @@ export default {
                 username: this.username,
                 password: this.password
             };
-<<<<<<< HEAD
-            try {
-                const { valid } = await AuthenticationService.login(credentials);
-                if (valid) {
-                    this.toggleAuthed();
-                } else {
-                    this.handleLoginError();
-                }
-            } catch (error) {
-                throw new Error(`The following error occurred from the component when logging in: ${error}`)
-=======
             await this.login(credentials);
             if (!this.errors) {
                 this.$router.push('/')
->>>>>>> main
             }
         },
         delay(t) { 

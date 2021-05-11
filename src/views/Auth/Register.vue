@@ -94,17 +94,9 @@ export default {
                 username: this.username,
                 password: this.password
             };
-<<<<<<< HEAD
-            try {
-                await AuthenticationService.register(credentials);
-                this.toggleAuthed();
-            } catch (error) {
-                throw new Error(`The following error occurred from the component when registering: ${error}`)
-=======
             await this.register(credentials);
             if (!this.errors) {
                 this.$router.push('/')
->>>>>>> main
             }
         }
     },
