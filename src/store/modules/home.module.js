@@ -1,15 +1,19 @@
 import { ScorecardService } from '../../common/api.service';
 import { FETCH_SCORECARDS } from '../actions.type';
-import { SET_SCORECARDS } from '../mutations.type';
+import { SET_SCORECARDS, SET_SCORECARD } from '../mutations.type';
 
 const home = {
     namespaced: true,
     state: () => ({
-        scorecards: []
+        scorecards: [],
+        scorecard: {}
     }),
     mutations: {
         [SET_SCORECARDS](state, payload) {
             state.scorecards = payload;
+        },
+        [SET_SCORECARD](state, payload) {
+            state.scorecard = payload;
         }
     },
     actions: {
@@ -25,6 +29,9 @@ const home = {
     getters: {
         scorecards(state) {
             return state.scorecards;
+        },
+        scorecard(state) {
+            return state.scorecard;
         }
     }
 }

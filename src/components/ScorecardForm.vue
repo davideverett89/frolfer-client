@@ -34,9 +34,12 @@
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
                     color="grey lighten-1"
-                    height="200px"
+                    height="50vh"
                 >
                     <RadioButtonGroup 
+                        :options="courses"
+                        v-model="scorecard.course"
+                        label="Select the course you will be playing at."
                     />
                 </v-card>
                 <v-btn
@@ -53,7 +56,7 @@
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
                     color="grey lighten-1"
-                    height="200px"
+                    height="50vh"
                 ></v-card>
                 <v-btn
                     class="mx-2"
@@ -75,7 +78,7 @@
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
                     color="grey lighten-1"
-                    height="200px"
+                    height="50vh"
                 ></v-card>
 
                 <v-btn
@@ -98,6 +101,12 @@
 </template>
 
 <script>
+import { mapActions, mapMutations, mapGetters } from 'vuex';
+
+import { FETCH_COURSES } from '../store/actions.type';
+
+import { SET_SCORECARD } from '../store/mutations.type';
+
 import RadioButtonGroup from '../components/RadioButtonGroup';
 
 export default {
@@ -107,17 +116,29 @@ export default {
     },
     data() {
         return {
-            e1: 1
+            e1: 1,
+            scorecard: {}
         }
     },
     created() {
-
+        this.fetchCources();
     },
     methods: {
         handleComplete() {
-            console.log('Form completed...');
+            this.setScorecard(this.scorecard);
             this.$emit('start');
-        }
+        },
+        ...mapActions({
+            fetchCources: `course/${FETCH_COURSES}`
+        }),
+        ...mapMutations({ 
+            setScorecard: `home/${SET_SCORECARD}`
+        })
+    },
+    computed: {
+        ...mapGetters({
+            courses: 'course/courses'
+        }),
     }
 }
 </script>
