@@ -31,17 +31,23 @@
 
         <v-stepper-items>
             <v-stepper-content class="panel" step="1">
-                <v-card
-                    class="d-flex justify-content-between align-items-center mb-12 text-white"
-                    color="grey lighten-1"
-                    min-height="50vh"
-                >
-                    <RadioButtonGroup 
-                        :options="courses"
-                        @change="handleRadioChange"
-                        label="Select the course you will be playing at."
-                    />
-                </v-card>
+                <v-container>
+                    <v-row>
+                        <v-col>
+                            <v-card
+                                class="mb-12"
+                                color="grey lighten-2"
+                                min-height="50vh"
+                            >
+                                <RadioButtonGroup 
+                                    :options="courses"
+                                    @change="handleRadioChange"
+                                    label="Select the course you will be playing at."
+                                />
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
                 <v-btn
                     class="mx-2"
                     color="secondary"
@@ -53,17 +59,23 @@
             </v-stepper-content>
 
             <v-stepper-content class="panel" step="2">
-                <v-card
-                    class="d-flex justify-content-between align-items-center mb-12"
-                    color="grey lighten-1"
-                    min-height="50vh"
-                >
-                    <CheckboxGroup 
-                        :options="players"
-                        label="Select players participating in the game."
-                        @change="handleCheckboxChange"
-                    />
-                </v-card>
+                <v-container>
+                    <v-row>
+                        <v-col>
+                            <v-card
+                                class="d-flex justify-content-between align-items-center mb-12"
+                                color="grey lighten-2"
+                                min-height="50vh"
+                            >
+                                <CheckboxGroup 
+                                    :options="players"
+                                    label="Select players participating in the game."
+                                    @change="handleCheckboxChange"
+                                />
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
                 <v-btn
                     class="mx-2"
                     @click="e1 = 1"
@@ -83,7 +95,7 @@
             <v-stepper-content class="panel" step="3">
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
-                    color="grey lighten-1"
+                    color="grey lighten-2"
                     min-height="50vh"
                 >
                     <ScorecardSummary :scorecard="scorecard" />

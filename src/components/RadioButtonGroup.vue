@@ -1,31 +1,26 @@
 <template>
-    <v-container fluid>
-        <v-row>
-            <v-col></v-col>
-            <v-col>
-                <template v-if="options.length === 0">
-                    <h6>No options available.</h6>
+<v-container class="RadioButtonGroup d-flex flex-column justify-content-center align-items-center" fluid>
+    <template v-if="options.length === 0">
+        <h6>No options available.</h6>
+    </template>
+    <template v-else>
+        <h2 class="my-5 radio-label">{{ label }}</h2>
+        <v-radio-group
+            v-model="inputValue"
+            mandatory
+        >
+            <v-radio
+                color="light"
+                v-for="(option, index) in options"
+                :key="index"
+                :value="option"
+            >
+                <template slot="label">
+                    <h3 class="mb-0">{{ option.name }}</h3>
                 </template>
-                <template v-else>
-                    <v-radio-group v-model="inputValue">
-                        <template slot="label">
-                            <h6>{{ label }}</h6>
-                        </template>
-                        <v-radio
-                            color="secondary"
-                            v-for="(option, index) in options"
-                            :key="index"
-                            :value="option"
-                        >
-                            <template slot="label">
-                                {{ option.name }}
-                            </template>
-                        </v-radio>
-                    </v-radio-group>
-                </template>
-            </v-col>
-            <v-col></v-col>
-        </v-row>
+            </v-radio>
+        </v-radio-group>
+    </template>
     </v-container>
 </template>
 
@@ -52,8 +47,8 @@ export default {
             get() {
                 return this.selected;
             },
-            set(newVal) {
-                this.selected = newVal;
+            set(value) {
+                this.selected = value;
             }
         }
     },
@@ -66,4 +61,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.RadioButtonGroup {
+    display: block;
+    overflow-y: auto;
+    .radio-label {
+        color: #5a5a5a;
+    }
+}
 </style>
