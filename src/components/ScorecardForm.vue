@@ -32,7 +32,7 @@
         <v-stepper-items>
             <v-stepper-content class="panel" step="1">
                 <v-card
-                    class="d-flex justify-content-between align-items-center mb-12"
+                    class="d-flex justify-content-between align-items-center mb-12 text-white"
                     color="grey lighten-1"
                     min-height="50vh"
                 >
@@ -86,7 +86,7 @@
                     color="grey lighten-1"
                     min-height="50vh"
                 >
-                    <ScorecardSummary />
+                    <ScorecardSummary :scorecard="scorecard" />
                 </v-card>
 
                 <v-btn
