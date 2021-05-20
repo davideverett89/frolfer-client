@@ -38,7 +38,7 @@
                 >
                     <RadioButtonGroup 
                         :options="courses"
-                        v-model="scorecard.course"
+                        @change="handleRadioChange"
                         label="Select the course you will be playing at."
                     />
                 </v-card>
@@ -86,6 +86,7 @@
                     color="grey lighten-1"
                     min-height="50vh"
                 >
+                    <ScorecardSummary />
                 </v-card>
 
                 <v-btn
@@ -116,17 +117,20 @@ import { SET_SCORECARD } from '../store/mutations.type';
 
 import RadioButtonGroup from '../components/RadioButtonGroup';
 import CheckboxGroup from '../components/CheckboxGroup';
+import ScorecardSummary from '../components/ScorecardSummary';
 
 export default {
     name: 'ScorecardForm',
     components: {
         RadioButtonGroup,
         CheckboxGroup,
+        ScorecardSummary,
     },
     data() {
         return {
             e1: 1,
             scorecard: {
+                course: {},
                 players: []
             }
         }
@@ -142,6 +146,9 @@ export default {
         },
         handleCheckboxChange(selections) {
             this.scorecard.players = selections;
+        },
+        handleRadioChange(selection) {
+            this.scorecard.course = selection
         },
         ...mapActions({
             fetchCources: `course/${FETCH_COURSES}`,

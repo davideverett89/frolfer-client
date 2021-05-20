@@ -12,9 +12,10 @@
                             <h6>{{ label }}</h6>
                         </template>
                         <v-radio
+                            color="secondary"
                             v-for="(option, index) in options"
                             :key="index"
-                            :value="`${option.id}`"
+                            :value="option"
                         >
                             <template slot="label">
                                 {{ option.name }}
@@ -31,14 +32,15 @@
 <script>
 export default {
     name: 'RadioButtonGroup',
+    data() {
+        return {
+            selected: {}
+        }
+    },
     props: {
         options: {
             type: Array,
             default: () => []
-        },
-        value: {
-            type: String,
-            default: ''
         },
         label: {
             type: String,
@@ -48,11 +50,16 @@ export default {
     computed: {
         inputValue: {
             get() {
-                return this.value;
+                return this.selected;
             },
             set(newVal) {
-                this.$emit('input', newVal);
+                this.selected = newVal;
             }
+        }
+    },
+    watch: {
+        selected() {
+            this.$emit('change', this.selected);
         }
     }
 }

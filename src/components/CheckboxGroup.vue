@@ -9,9 +9,10 @@
                 <template v-else>
                     <h6>{{ label }}</h6>
                     <v-checkbox
+                        color="secondary"
                         v-for="(option, index) in options"
                         :key="index"
-                        v-model="selected"
+                        v-model="handleSelected"
                         :label="option.user.first_name || option.user.username"
                         :value="option"
                     ></v-checkbox>
@@ -38,6 +39,16 @@ export default {
         label: {
             type: String,
             default: ''
+        }
+    },
+    computed: {
+        handleSelected: {
+            get() {
+                return this.selected;
+            },
+            set(value) {
+                this.selected = value;
+            }
         }
     },
     watch: {
