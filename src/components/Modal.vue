@@ -1,6 +1,7 @@
 <template>
     <v-row justify="center">
         <v-dialog
+            class="modal-main"
             v-model="dialog"
             fullscreen
             hide-overlay
@@ -15,15 +16,15 @@
                 {{ buttonText }}
             </v-btn>
             </template>
-            <v-card>
+            <v-card class="panel">
                 <v-toolbar
                     dark
-                    color="info"
+                    color="secondary"
                 >
                     <v-btn
                         icon
                         dark
-                        @click="dialog = false"
+                        @click="toggle"
                     >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
@@ -52,8 +53,18 @@ export default {
         dialog: false,
       }
     },
+    methods: {
+        toggle() {
+            this.dialog = !this.dialog;
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/_variables.scss';
+
+.panel {
+    background-color: $primaryColor !important;
+}
 </style>

@@ -16,7 +16,7 @@ const course = {
     actions: {
         async [FETCH_COURSES]({ commit }) {
             try {
-                const { data } = await CourseService.getAll();
+                const data = await CourseService.getAll();
                 commit(SET_COURSES, data)
             } catch(error) {
                 throw new Error(`The following error occurred in the store while fetching courses: ${error}`);

@@ -15,7 +15,7 @@ const home = {
     actions: {
         async [FETCH_SCORECARDS]({ commit }) {
             try {
-                const { data } = await ScorecardService.getAll();
+                const data  = await ScorecardService.getAll();
                 commit(SET_SCORECARDS, data);
             } catch(error) {
                 throw new Error(`The following error occurred in the store while fetching scorecards: ${error}`);
