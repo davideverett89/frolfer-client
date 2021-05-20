@@ -8,13 +8,13 @@
                 </template>
                 <template v-else>
                     <v-radio-group v-model="inputValue">
-                            <template slot="label">
-                                <h6>{{ label }}</h6>
-                            </template>
+                        <template slot="label">
+                            <h6>{{ label }}</h6>
+                        </template>
                         <v-radio
                             v-for="(option, index) in options"
                             :key="index"
-                            :value="option.name"
+                            :value="`${option.id}`"
                         >
                             <template slot="label">
                                 {{ option.name }}
@@ -58,5 +58,5 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

@@ -34,7 +34,7 @@
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
                     color="grey lighten-1"
-                    height="50vh"
+                    min-height="50vh"
                 >
                     <RadioButtonGroup 
                         :options="courses"
@@ -56,8 +56,14 @@
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
                     color="grey lighten-1"
-                    height="50vh"
-                ></v-card>
+                    min-height="50vh"
+                >
+                    <CheckboxGroup 
+                        :options="players"
+                        label="Select players participating in the game."
+                        @change="handleCheckboxChange"
+                    />
+                </v-card>
                 <v-btn
                     class="mx-2"
                     @click="e1 = 1"
@@ -78,8 +84,9 @@
                 <v-card
                     class="d-flex justify-content-between align-items-center mb-12"
                     color="grey lighten-1"
-                    height="50vh"
-                ></v-card>
+                    min-height="50vh"
+                >
+                </v-card>
 
                 <v-btn
                     class="mx-2"
@@ -103,33 +110,42 @@
 <script>
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 
-import { FETCH_COURSES } from '../store/actions.type';
+import { FETCH_COURSES, FETCH_PLAYERS } from '../store/actions.type';
 
 import { SET_SCORECARD } from '../store/mutations.type';
 
 import RadioButtonGroup from '../components/RadioButtonGroup';
+import CheckboxGroup from '../components/CheckboxGroup';
 
 export default {
     name: 'ScorecardForm',
     components: {
         RadioButtonGroup,
+        CheckboxGroup,
     },
     data() {
         return {
             e1: 1,
-            scorecard: {}
+            scorecard: {
+                players: []
+            }
         }
     },
     created() {
         this.fetchCources();
+        this.fetchPlayers();
     },
     methods: {
         handleComplete() {
             this.setScorecard(this.scorecard);
             this.$emit('start');
         },
+        handleCheckboxChange(selections) {
+            this.scorecard.players = selections;
+        },
         ...mapActions({
-            fetchCources: `course/${FETCH_COURSES}`
+            fetchCources: `course/${FETCH_COURSES}`,
+            fetchPlayers: `player/${FETCH_PLAYERS}`
         }),
         ...mapMutations({ 
             setScorecard: `home/${SET_SCORECARD}`
@@ -137,7 +153,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            courses: 'course/courses'
+            courses: 'course/courses',
+            players: 'player/players'
         }),
     }
 }

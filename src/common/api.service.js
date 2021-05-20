@@ -114,3 +114,14 @@ export const CourseService = {
     }
   }
 }
+
+export const PlayerService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('players');
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while getting all score cards: ${error}`);
+    }
+  }
+}
