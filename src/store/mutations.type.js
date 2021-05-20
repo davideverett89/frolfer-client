@@ -8,3 +8,5 @@ export const SET_COURSE = 'setCourse';
 export const SET_PLAYERS = 'setPlayers';
 export const RESET = 'reset';
 export const SET_ROUNDS = 'setRounds';
+export const SET_HOLES = 'setHoles';
+export const SET_ROUNDHOLES = 'setRoundHoles';

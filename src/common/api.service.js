@@ -125,3 +125,22 @@ export const PlayerService = {
     }
   }
 }
+
+export const HoleService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('holes');
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while getting all holes: ${error}`);
+    }
+  },
+  getHolesByCourseId: async (params) => {
+    try {
+      const { data } = await ApiService.query('holes', { params: params });
+      return data;
+    } catch(error) {
+      throw new Error(`The following error occurred while getting holes by course_id: ${error}`);
+    }
+  }
+}

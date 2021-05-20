@@ -11,6 +11,14 @@ const round = {
             state.rounds = payload;
         }
     },
+    getters: {
+        round(state) {
+            return state.round;
+        },
+        rounds(state) {
+            return state.rounds;
+        }
+    }
 }
 
 export default round;
