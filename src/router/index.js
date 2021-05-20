@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Login from '../views/Auth/Login';
-import Register from '../views/Auth/Register';
-import Logout from '../views/Auth/Logout';
+import Login from '../views/Login';
+import Register from '../views/Register';
+import Logout from '../views/Logout';
 import Home from '../views/Home';
+import GameDashboard from '../views/GameDashboard';
 
 import { AuthenticationService } from '../common/api.service';
 
@@ -15,6 +16,14 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/dashboard',
+        name: 'GameDashboard',
+        component: GameDashboard,
         meta: {
             requiresAuth: true
         }

@@ -3,7 +3,7 @@
         rounded
         color="white"
         elevation="15"
-        class="Register text-left p-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 m-auto"
+        class="Login text-left p-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 m-auto"
     >
         <v-form
             ref=form
@@ -11,48 +11,36 @@
             lazy-validation
         >
             <h1 class="my-5 mr-0">
-                Register
+                Login
             </h1>
-            <v-alert v-if="errors" type="error">
+            <v-alert
+                v-if="errors"
+                type="error"
+                dismissible
+            >
                 {{ errors }}
             </v-alert>
             <v-divider></v-divider>
             <v-text-field
-                v-model="firstName"
-                :counter="50"
-                label="First Name:"
-                required
-            />
-            <v-text-field
-                v-model="lastName"
-                :counter="50"
-                label="Last Name:"
-                required
-            />
-            <v-text-field
-                v-model="email"
-                :counter="50"
-                label="Email:"
-                required
-            />
-            <v-text-field
                 v-model="username"
-                :counter="10"
+                :counter="50"
                 :rules="usernameRules"
                 label="Username:"
+                :error="alert"
                 required
             />
             <v-text-field
                 type="password"
                 v-model="password"
                 label="Password:"
+                :error="alert"
                 required
             />
             <v-btn
                 color="primary"
                 @click="onSubmit"
             >
-                Create Account
+                Submit
             </v-btn>
         </v-form>
     </v-sheet>
@@ -61,44 +49,39 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 
-import { REGISTER } from '../../store/actions.type';
+import { LOGIN } from '../store/actions.type';
 
 const { mapActions, mapGetters } = createNamespacedHelpers('auth');
 
 export default {
-    name: 'Register',
+    name: 'Login',
     data() {
         return {
             valid: true,
-            firstName: '',
-            lastName: '',
-            email: '',
             username: '',
             usernameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+                v => !!v || 'Username is required',
+                v => (v && v.length <= 50) || 'Username must be less than 10 characters',
             ],
-            password: ''
+            password: '',
+            alert: false
         }
     },
     methods: {
         ...mapActions({
-            register: REGISTER
+            login: LOGIN
         }),
         async onSubmit(e) {
             e.preventDefault();
             const credentials = {
-                first_name: this.firstName,
-                last_name: this.lastName,
-                email: this.email,
                 username: this.username,
                 password: this.password
             };
-            await this.register(credentials);
+            await this.login(credentials);
             if (!this.errors) {
                 this.$router.push('/')
             }
-        }
+        },
     },
     computed: {
         ...mapGetters(['errors'])
@@ -106,8 +89,5 @@ export default {
 }
 </script>
 
-<style>
-.Register {
-    display: block;
-}
+<style lang="scss" scoped>
 </style>

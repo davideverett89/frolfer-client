@@ -3,7 +3,7 @@
         rounded
         color="white"
         elevation="15"
-        class="Login text-left p-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 m-auto"
+        class="Register text-left p-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 m-auto"
     >
         <v-form
             ref=form
@@ -11,15 +11,33 @@
             lazy-validation
         >
             <h1 class="my-5 mr-0">
-                Login
+                Register
             </h1>
             <v-alert v-if="errors" type="error">
                 {{ errors }}
             </v-alert>
             <v-divider></v-divider>
             <v-text-field
-                v-model="username"
+                v-model="firstName"
                 :counter="50"
+                label="First Name:"
+                required
+            />
+            <v-text-field
+                v-model="lastName"
+                :counter="50"
+                label="Last Name:"
+                required
+            />
+            <v-text-field
+                v-model="email"
+                :counter="50"
+                label="Email:"
+                required
+            />
+            <v-text-field
+                v-model="username"
+                :counter="10"
                 :rules="usernameRules"
                 label="Username:"
                 required
@@ -34,7 +52,7 @@
                 color="primary"
                 @click="onSubmit"
             >
-                Submit
+                Create Account
             </v-btn>
         </v-form>
     </v-sheet>
@@ -43,34 +61,40 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 
-import { LOGIN } from '../../store/actions.type';
+import { REGISTER } from '../store/actions.type';
 
 const { mapActions, mapGetters } = createNamespacedHelpers('auth');
 
 export default {
-    name: 'Login',
+    name: 'Register',
     data() {
         return {
             valid: true,
+            firstName: '',
+            lastName: '',
+            email: '',
             username: '',
             usernameRules: [
-                v => !!v || 'Username is required',
-                v => (v && v.length <= 50) || 'Username must be less than 10 characters',
+                v => !!v || 'Name is required',
+                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
             ],
-            password: '',
+            password: ''
         }
     },
     methods: {
         ...mapActions({
-            login: LOGIN
+            register: REGISTER
         }),
         async onSubmit(e) {
             e.preventDefault();
             const credentials = {
+                first_name: this.firstName,
+                last_name: this.lastName,
+                email: this.email,
                 username: this.username,
                 password: this.password
             };
-            await this.login(credentials);
+            await this.register(credentials);
             if (!this.errors) {
                 this.$router.push('/')
             }
@@ -82,11 +106,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.Login {
-    display: block;
-    h1 {
-        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    }
-}
+<style>
 </style>

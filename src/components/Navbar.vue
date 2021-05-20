@@ -69,7 +69,7 @@
                 <v-app-bar-nav-icon></v-app-bar-nav-icon>
             </span>
             <v-toolbar-title class="m-auto pb-0">
-                <router-link to="/" tag="h2" style="cursor: pointer">
+                <router-link to="/" tag="h2" style="cursor: pointer; margin-bottom: 0">
                     {{ appTitle }}
                 </router-link>
             </v-toolbar-title>
@@ -80,7 +80,7 @@
                     text
                     to="/"
                 >
-                    <v-icon left dark>
+                    <v-icon left light>
                         fas fa-home
                     </v-icon>
                     Home
@@ -145,8 +145,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
+.Navbar {
+    display: block;
 }
 </style>

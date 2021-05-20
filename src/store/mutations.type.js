@@ -1,4 +1,10 @@
 export const SET_SCORECARDS = 'setScorecards';
+export const SET_SCORECARD = 'setScorecard';
 export const SET_AUTH = 'setAuth';
 export const PURGE_AUTH = 'purgeAuth';
 export const SET_ERRORS = 'setErrors';
+export const SET_COURSES = 'setCourses';
+export const SET_COURSE = 'setCourse';
+export const SET_PLAYERS = 'setPlayers';
+export const RESET = 'reset';
+export const SET_ROUNDS = 'setRounds';

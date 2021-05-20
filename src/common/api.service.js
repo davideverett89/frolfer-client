@@ -97,10 +97,31 @@ export const ScorecardService = {
   getAll: async () => {
     try {
       const { data } = await ApiService.get('score_cards');
-      console.log(data);
       return data;
     } catch (error) {
-      throw new Error(`The following error occurred while getting all score cards: ${error}`)
+      throw new Error(`The following error occurred while getting all score cards: ${error}`);
+    }
+  }
+}
+
+export const CourseService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('courses');
+      return data;
+    } catch(error) {
+      throw new Error(`The following error occurred while getting all courses: ${error}`);
+    }
+  }
+}
+
+export const PlayerService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('players');
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while getting all score cards: ${error}`);
     }
   }
 }

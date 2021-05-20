@@ -12,7 +12,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 
-import { LOGOUT} from '../../store/actions.type';
+import { LOGOUT} from '../store/actions.type';
 
 const { mapActions } = createNamespacedHelpers('auth');
 
@@ -30,7 +30,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Logout {
-    display: block;
-}
 </style>
