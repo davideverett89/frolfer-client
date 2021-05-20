@@ -1,4 +1,4 @@
-import { SET_COURSES, SET_COURSE } from '../mutations.type';
+import { SET_COURSES, SET_COURSE, RESET } from '../mutations.type';
 import { FETCH_COURSES } from '../actions.type';
 
 import { CourseService } from '../../common/api.service';
@@ -15,6 +15,9 @@ const course = {
         },
         [SET_COURSE](state, payload) {
             state.course = payload;
+        },
+        [RESET](state) {
+            state.courses = []; 
         }
     },
     actions: {

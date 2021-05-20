@@ -98,7 +98,7 @@
                     color="grey lighten-2"
                     min-height="50vh"
                 >
-                    <ScorecardSummary :scorecard="scorecard" />
+                    <ScorecardSummary :data="{ selectedCourse, selectedPlayers }" />
                 </v-card>
 
                 <v-btn
@@ -121,11 +121,13 @@
 </template>
 
 <script>
+import DateTime from 'luxon/src/datetime.js'
+
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 
 import { FETCH_COURSES, FETCH_PLAYERS } from '../store/actions.type';
 
-import { SET_SCORECARD } from '../store/mutations.type';
+import { SET_COURSE, SET_SCORECARD, RESET, SET_ROUNDS } from '../store/mutations.type';
 
 import RadioButtonGroup from '../components/RadioButtonGroup';
 import CheckboxGroup from '../components/CheckboxGroup';
@@ -141,33 +143,55 @@ export default {
     data() {
         return {
             e1: 1,
-            scorecard: {
-                course: {},
-                players: []
-            }
+            selectedCourse: {},
+            selectedPlayers: [],
+            scorecard: {}
         }
     },
     created() {
         this.fetchCources();
         this.fetchPlayers();
     },
+    destroyed() {
+        this.resetCourses();
+        this.resetPlayers();
+    },
     methods: {
         handleComplete() {
+            this.scorecard.course_id = this.selectedCourse.id;
+            this.scorecard.start_time = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+            this.scorecard.end_time = '';
+            this.scorecard.condition = '';
             this.setScorecard(this.scorecard);
+            this.setRounds(this.handleCreateRounds());
+            this.setCourse(this.selectedCourse);
             this.$emit('start');
         },
+        handleCreateRounds() {
+            return this.selectedPlayers.map(x => {
+                const round = {
+                    player_id: x.id,
+                    score: 0
+                }
+                return round;
+            })
+        },
         handleCheckboxChange(selections) {
-            this.scorecard.players = selections;
+            this.selectedPlayers = selections;
         },
         handleRadioChange(selection) {
-            this.scorecard.course = selection
+            this.selectedCourse = selection;
         },
         ...mapActions({
             fetchCources: `course/${FETCH_COURSES}`,
             fetchPlayers: `player/${FETCH_PLAYERS}`
         }),
         ...mapMutations({ 
-            setScorecard: `home/${SET_SCORECARD}`
+            setScorecard: `home/${SET_SCORECARD}`,
+            setCourse: `course/${SET_COURSE}`,
+            resetCourses: `course/${RESET}`,
+            resetPlayers: `player/${RESET}`,
+            setRounds: `round/${SET_ROUNDS}`,
         })
     },
     computed: {

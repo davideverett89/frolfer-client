@@ -1,6 +1,6 @@
 import { FETCH_PLAYERS } from '../actions.type';
 
-import { SET_PLAYERS } from '../mutations.type'
+import { SET_PLAYERS, RESET } from '../mutations.type'
 
 import { PlayerService } from '../../common/api.service';
 
@@ -13,6 +13,9 @@ const player = {
     mutations: {
         [SET_PLAYERS](state, payload) {
             state.players = payload
+        },
+        [RESET](state) {
+            state.players = [];
         }
     },
     actions: {

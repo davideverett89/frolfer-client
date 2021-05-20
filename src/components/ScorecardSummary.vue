@@ -7,13 +7,13 @@
                     <li class="list-group-item bg-transparent border-0 summary-label">
                         <h2 class="mb-0">
                             <strong>Course Name:</strong>
-                            {{ scorecard.course.name }}
+                            {{ data.selectedCourse.name }}
                         </h2>
                     </li>
                     <li class="list-group-item bg-transparent border-0 summary-label">
                         <h2 class="mb-0">
                             <strong>Location:</strong>
-                            {{ `${scorecard.course.city}, ${scorecard.course.state}` }}
+                            {{ `${data.selectedCourse.city}, ${data.selectedCourse.state}` }}
                         </h2>
                     </li>
                 </ul>
@@ -23,13 +23,13 @@
     <v-row>
         <v-col>
             <div class="PlayerCard">
-                <template v-if="scorecard.players.length === 0">
+                <template v-if="data.selectedPlayers.length === 0">
                     <h6>No Players Selected</h6>
                 </template>
                 <template v-else>
                     <ul class="list-group pl-0">
                         <li
-                            v-for="(player, index) in scorecard.players"
+                            v-for="(player, index) in data.selectedPlayers"
                             :key="index"
                             class="list-group-item d-flex justify-content-center align-items-center bg-transparent border-0 summary-label"
                         >
@@ -60,7 +60,7 @@
 export default {
     name: 'ScorecardSummary',
     props: {
-        scorecard: {
+        data: {
             type: Object,
             default: () => {}
         },
