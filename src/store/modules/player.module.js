@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS } from '../actions.type';
+import { FETCH_PLAYERS, SET_SELECTED_PLAYERS, CREATE_ROUNDS } from '../actions.type';
 
 import { SET_PLAYERS, RESET } from '../mutations.type'
 
@@ -26,6 +26,10 @@ const player = {
             } catch(error) {
                 throw new Error(`The following error occurred in the store while fetching scorecards: ${error}`);
             }
+        },
+        [SET_SELECTED_PLAYERS]({ dispatch, commit }, payload) {
+            commit(SET_PLAYERS, payload);
+            dispatch(`round/${CREATE_ROUNDS}`, payload, { root: true });
         }
     },
     getters: {

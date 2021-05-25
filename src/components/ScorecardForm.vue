@@ -125,9 +125,9 @@ import DateTime from 'luxon/src/datetime.js'
 
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 
-import { FETCH_COURSES, FETCH_PLAYERS } from '../store/actions.type';
+import { FETCH_COURSES, FETCH_PLAYERS, SET_SELECTED_PLAYERS } from '../store/actions.type';
 
-import { SET_COURSE, SET_SCORECARD, RESET, SET_ROUNDS } from '../store/mutations.type';
+import { SET_COURSE, SET_SCORECARD, RESET } from '../store/mutations.type';
 
 import RadioButtonGroup from '../components/RadioButtonGroup';
 import CheckboxGroup from '../components/CheckboxGroup';
@@ -154,7 +154,6 @@ export default {
     },
     destroyed() {
         this.resetCourses();
-        this.resetPlayers();
     },
     methods: {
         handleComplete() {
@@ -163,18 +162,9 @@ export default {
             this.scorecard.end_time = '';
             this.scorecard.condition = '';
             this.setScorecard(this.scorecard);
-            this.setRounds(this.handleCreateRounds());
+            this.setSelectedPlayers(this.selectedPlayers);
             this.setCourse(this.selectedCourse);
             this.$emit('start');
-        },
-        handleCreateRounds() {
-            return this.selectedPlayers.map(x => {
-                const round = {
-                    player_id: x.id,
-                    score: 0
-                }
-                return round;
-            })
         },
         handleCheckboxChange(selections) {
             this.selectedPlayers = selections;
@@ -184,14 +174,13 @@ export default {
         },
         ...mapActions({
             fetchCources: `course/${FETCH_COURSES}`,
-            fetchPlayers: `player/${FETCH_PLAYERS}`
+            fetchPlayers: `player/${FETCH_PLAYERS}`,
+            setSelectedPlayers: `player/${SET_SELECTED_PLAYERS}`,
         }),
         ...mapMutations({ 
             setScorecard: `home/${SET_SCORECARD}`,
             setCourse: `course/${SET_COURSE}`,
             resetCourses: `course/${RESET}`,
-            resetPlayers: `player/${RESET}`,
-            setRounds: `round/${SET_ROUNDS}`,
         })
     },
     computed: {

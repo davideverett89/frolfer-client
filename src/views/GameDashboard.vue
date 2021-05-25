@@ -1,21 +1,48 @@
 <template>
-  <div class="GameDashboard">
-      <h1>Game Dashboard</h1>
-  </div>
+    <v-col>
+        <v-container class="GameDashboard">
+            <HoleInfoBanner class="my-5" :currentHole="currentHole" />
+            <PlayerInterface
+                v-for="(player, index) in players"
+                :key="index"
+                :player="player"
+                :index="index"
+                :currentHole="currentHole"
+             />
+            <v-row class="my-5">
+                <v-col class="d-flex flex-row justify-content-around align-items-center">
+                    <v-btn
+                        color="primary"
+                        @click="decreaseCounter"
+                    >
+                        Previous Hole
+                    </v-btn>
+                    <v-btn
+                        color="primary"
+                        @click="increaseCounter"
+                    >
+                        Next Hole
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-col>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 import { FETCH_HOLES_BY_COURSE_ID } from '../store/actions.type';
-import { SET_ROUNDHOLES } from '../store/mutations.type';
+import { SET_ROUND_HOLES, INCREASE_COUNTER, DECREASE_COUNTER } from '../store/mutations.type';
+
+import HoleInfoBanner from '@/components/HoleInfoBanner';
+import PlayerInterface from '@/components/PlayerInterface';
 
 export default {
     name: 'GameDashboard',
-    data() {
-        return {
-            counter: 0
-        }
+    components: {
+        HoleInfoBanner,
+        PlayerInterface,
     },
     async created() {
         await this.fetchHoles({ course: this.course.id });
@@ -23,30 +50,21 @@ export default {
     computed: {
         ...mapGetters({
             holes: 'hole/holes',
+            currentHole: 'hole/currentHole',
             course: 'course/course',
-            rounds: 'round/rounds'
+            rounds: 'round/rounds',
+            players: 'player/players'
         }),
-        currentHole() {
-            return this.holes[this.counter];
-        }
     },
     methods: {
         ...mapActions({
-            fetchHoles: `hole/${FETCH_HOLES_BY_COURSE_ID}`
+            fetchHoles: `hole/${FETCH_HOLES_BY_COURSE_ID}`,
         }),
         ...mapMutations({
-            setRoundHoles: `roundHole/${SET_ROUNDHOLES}`
+            setRoundHoles: `roundHole/${SET_ROUND_HOLES}`,
+            increaseCounter: `hole/${INCREASE_COUNTER}`,
+            decreaseCounter: `hole/${DECREASE_COUNTER}`
         }),
-        handleCreateRoundHoles(roundId) {
-            return this.holes.map(x => {
-                const roundHole = {
-                    hole_id: x.id,
-                    round_id: roundId,
-                    score: 0,
-                };
-                return roundHole;
-            })
-        },
     }
 }
 </script>

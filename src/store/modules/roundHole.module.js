@@ -1,4 +1,4 @@
-import { SET_ROUNDHOLES } from '../mutations.type';
+import { SET_ROUND_HOLES } from '../mutations.type';
 
 const roundHole = {
     namespaced: true,
@@ -7,7 +7,7 @@ const roundHole = {
         roundHoles: []
     }),
     mutations: {
-        [SET_ROUNDHOLES](state, payload) {
+        [SET_ROUND_HOLES](state, payload) {
             state.roundHoles = payload
         }
     },

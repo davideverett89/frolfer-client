@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="Navbar">
         <v-navigation-drawer
             v-model="sidebar"
             app
@@ -62,7 +62,6 @@
         </v-navigation-drawer>
 
         <v-toolbar
-            elevation="15"
             flat
         >
             <span class="hidden-sm-and-up" @click="sidebar = !sidebar">
