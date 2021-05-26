@@ -40,6 +40,9 @@ const hole = {
         },
         currentHole(state) {
             return state.holes[state.holeIndex];
+        },
+        holeIndex(state) {
+            return state.holeIndex;
         }
     }
 };

@@ -17,7 +17,9 @@ const round = {
             const rounds = payload.map(x => {
                 const round = {
                     player_id: x.id,
-                    score: 0
+                    score_card_id: 0,
+                    score: 0,
+                    total_strokes: 0
                 }
                 return round;
             });

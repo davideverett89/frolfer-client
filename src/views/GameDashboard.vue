@@ -6,7 +6,6 @@
                 v-for="(player, index) in players"
                 :key="index"
                 :player="player"
-                :index="index"
                 :currentHole="currentHole"
              />
             <v-row class="my-5">
@@ -44,15 +43,13 @@ export default {
         HoleInfoBanner,
         PlayerInterface,
     },
-    async created() {
-        await this.fetchHoles({ course: this.course.id });
+    created() {
+        this.fetchHoles({ course: this.course.id });
     },
     computed: {
         ...mapGetters({
-            holes: 'hole/holes',
             currentHole: 'hole/currentHole',
             course: 'course/course',
-            rounds: 'round/rounds',
             players: 'player/players'
         }),
     },
