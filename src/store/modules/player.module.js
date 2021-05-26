@@ -27,9 +27,9 @@ const player = {
                 throw new Error(`The following error occurred in the store while fetching scorecards: ${error}`);
             }
         },
-        [SET_SELECTED_PLAYERS]({ dispatch, commit }, payload) {
-            commit(SET_PLAYERS, payload);
-            dispatch(`round/${CREATE_ROUNDS}`, payload, { root: true });
+        [SET_SELECTED_PLAYERS]({ dispatch, commit }, { selectedPlayers, score_card_id }) {
+            commit(SET_PLAYERS, selectedPlayers);
+            dispatch(`round/${CREATE_ROUNDS}`, { selectedPlayers, score_card_id }, { root: true });
         }
     },
     getters: {

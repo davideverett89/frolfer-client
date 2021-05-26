@@ -1,3 +1,5 @@
+import { RoundService } from '../../common/api.service';
+
 import { SET_ROUNDS } from '../mutations.type';
 import { CREATE_ROUNDS } from '../actions.type';
 
@@ -13,17 +15,20 @@ const round = {
         }
     },
     actions: {
-        [CREATE_ROUNDS]({ commit }, payload) {
-            const rounds = payload.map(x => {
+        async [CREATE_ROUNDS]({ commit }, { selectedPlayers, score_card_id }) {
+            const rounds = selectedPlayers.map( async (x) => {
                 const round = {
                     player_id: x.id,
-                    score_card_id: 0,
+                    score_card_id: score_card_id,
                     score: 0,
                     total_strokes: 0
                 }
-                return round;
+                const data = await RoundService.createRound(round);
+                return data;
             });
-            commit(SET_ROUNDS, rounds);
+            const data = await Promise.all(rounds);
+            console.log('Hopefully maybe some rounds:', data);
+            commit(SET_ROUNDS, data);
         }
     },
     getters: {

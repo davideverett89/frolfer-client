@@ -2,6 +2,9 @@
     <v-col>
         <v-container class="GameDashboard">
             <HoleInfoBanner class="my-5" :currentHole="currentHole" />
+            <v-row>
+                <v-col></v-col>
+            </v-row>
             <PlayerInterface
                 v-for="(player, index) in players"
                 :key="index"
@@ -32,7 +35,7 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 import { FETCH_HOLES_BY_COURSE_ID } from '../store/actions.type';
-import { SET_ROUND_HOLES, INCREASE_COUNTER, DECREASE_COUNTER } from '../store/mutations.type';
+import { SET_ROUND_HOLE, INCREASE_COUNTER, DECREASE_COUNTER } from '../store/mutations.type';
 
 import HoleInfoBanner from '@/components/HoleInfoBanner';
 import PlayerInterface from '@/components/PlayerInterface';
@@ -58,7 +61,7 @@ export default {
             fetchHoles: `hole/${FETCH_HOLES_BY_COURSE_ID}`,
         }),
         ...mapMutations({
-            setRoundHoles: `roundHole/${SET_ROUND_HOLES}`,
+            setRoundHoles: `roundHole/${SET_ROUND_HOLE}`,
             increaseCounter: `hole/${INCREASE_COUNTER}`,
             decreaseCounter: `hole/${DECREASE_COUNTER}`
         }),

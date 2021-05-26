@@ -1,12 +1,12 @@
 <template>
     <v-row>
-        <v-col cols="10" class="text-left">
+        <v-col cols="10" class="text-left p-4">
             <h2>{{ player.user.first_name.toUpperCase() || player.user.username.toUpperCase() }} {{ player.user.last_name }}</h2>
-            <div class="d-flex justify-content-start align-items-center">
+            <div v-if="currentRound" class="d-flex justify-content-start align-items-center">
                 ({{ currentRound.total_strokes }})
             </div>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" class="p-4">
             <div class="d-flex justify-content-center align-items-center">
                 <v-btn
                     @click="() => handleClick('decrease')"
@@ -73,8 +73,8 @@ export default {
                 this.roundHole = this.currentRoundHole;
             } else {
                 this.roundHole = {
-                    round_id: this.currentRound.id,
-                    hole_id: this.currentHole.id,
+                    round_id: this.currentRound.id || 0,
+                    hole_id: this.currentHole.id || 0,
                     strokes: 0
                 }
             }

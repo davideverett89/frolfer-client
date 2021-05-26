@@ -121,13 +121,13 @@
 </template>
 
 <script>
-import DateTime from 'luxon/src/datetime.js'
+// import DateTime from 'luxon/src/datetime.js' < -- Might have to uninstall
 
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 
-import { FETCH_COURSES, FETCH_PLAYERS, SET_SELECTED_PLAYERS } from '../store/actions.type';
+import { FETCH_COURSES, FETCH_PLAYERS, SET_SELECTED_PLAYERS, CREATE_SCORECARD } from '../store/actions.type';
 
-import { SET_COURSE, SET_SCORECARD, RESET } from '../store/mutations.type';
+import { SET_COURSE, RESET } from '../store/mutations.type';
 
 import RadioButtonGroup from '../components/RadioButtonGroup';
 import CheckboxGroup from '../components/CheckboxGroup';
@@ -156,13 +156,11 @@ export default {
         this.resetCourses();
     },
     methods: {
-        handleComplete() {
+        async handleComplete() {
             this.scorecard.course_id = this.selectedCourse.id;
-            this.scorecard.start_time = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-            this.scorecard.end_time = '';
             this.scorecard.condition = '';
-            this.setScorecard(this.scorecard);
-            this.setSelectedPlayers(this.selectedPlayers);
+            await this.createScorecard(this.scorecard);
+            this.setSelectedPlayers({ selectedPlayers: this.selectedPlayers, score_card_id: this.newScorecard.id });
             this.setCourse(this.selectedCourse);
             this.$emit('start');
         },
@@ -176,9 +174,10 @@ export default {
             fetchCources: `course/${FETCH_COURSES}`,
             fetchPlayers: `player/${FETCH_PLAYERS}`,
             setSelectedPlayers: `player/${SET_SELECTED_PLAYERS}`,
+            createScorecard: `home/${CREATE_SCORECARD}`
         }),
         ...mapMutations({ 
-            setScorecard: `home/${SET_SCORECARD}`,
+            // setScorecard: `home/${SET_SCORECARD}`,
             setCourse: `course/${SET_COURSE}`,
             resetCourses: `course/${RESET}`,
         })
@@ -186,7 +185,8 @@ export default {
     computed: {
         ...mapGetters({
             courses: 'course/courses',
-            players: 'player/players'
+            players: 'player/players',
+            newScorecard: 'home/scorecard'
         }),
     }
 }
