@@ -1,5 +1,5 @@
 import { ScorecardService } from '../../common/api.service';
-import { FETCH_SCORECARDS, CREATE_SCORECARD } from '../actions.type';
+import { FETCH_SCORECARDS, CREATE_SCORECARD, CREATE_ROUNDS } from '../actions.type';
 import { SET_SCORECARDS, SET_SCORECARD } from '../mutations.type';
 
 const home = {
@@ -26,10 +26,11 @@ const home = {
                 throw new Error(`The following error occurred in the store while fetching scorecards: ${error}`);
             }
         },
-        async [CREATE_SCORECARD]({ commit }, payload) {
+        async [CREATE_SCORECARD]({ dispatch, commit }, { score_card, selectedPlayers }) {
             try {
-                const data = await ScorecardService.createScorecard(payload);
+                const data = await ScorecardService.createScorecard(score_card);
                 commit(SET_SCORECARD, data);
+                dispatch(`round/${CREATE_ROUNDS}`, { selectedPlayers: selectedPlayers, score_card_id: data.id }, { root: true })
             } catch(error) {
                 throw new Error(`The following error occurred while creating a new score card ${error}`);
             }

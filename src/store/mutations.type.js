@@ -10,6 +10,7 @@ export const RESET = 'reset';
 export const SET_ROUNDS = 'setRounds';
 export const SET_HOLES = 'setHoles';
 export const SET_ROUND_HOLE = 'setRoundHole';
+export const SET_ROUND_HOLES = 'setRoundHoles';
 export const ADD_ROUND_HOLE = 'addRoundHole';
 export const INCREASE_COUNTER = 'increaseCounter';
 export const DECREASE_COUNTER = 'decreaseCounter';

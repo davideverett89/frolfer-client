@@ -1,9 +1,9 @@
 <template>
     <v-row>
         <v-col cols="10" class="text-left p-4">
-            <h2>{{ player.user.first_name.toUpperCase() || player.user.username.toUpperCase() }} {{ player.user.last_name }}</h2>
-            <div v-if="currentRound" class="d-flex justify-content-start align-items-center">
-                ({{ currentRound.total_strokes }})
+            <h2>{{ round.player.user.first_name.toUpperCase() || round.player.user.username.toUpperCase() }} {{ round.player.user.last_name }}</h2>
+            <div class="d-flex justify-content-start align-items-center">
+                ({{ round.total_strokes }})
             </div>
         </v-col>
         <v-col cols="2" class="p-4">
@@ -38,7 +38,7 @@ export default {
         }
     },
     props: {
-        player: {
+        round: {
             type: Object,
             default: () => ({})
         },
@@ -72,8 +72,9 @@ export default {
             if (this.currentRoundHole !== undefined) {
                 this.roundHole = this.currentRoundHole;
             } else {
+                console.log('Hello!!!!');
                 this.roundHole = {
-                    round_id: this.currentRound.id || 0,
+                    round_id: this.round.id || 0,
                     hole_id: this.currentHole.id || 0,
                     strokes: 0
                 }
@@ -82,24 +83,20 @@ export default {
     },
     computed: {
         ...mapGetters({
-            rounds: 'round/rounds',
             holeIndex: 'hole/holeIndex',
             roundHoles: 'roundHole/roundHoles'
         }),
-        currentRound() {
-            return this.rounds.find(x => x.player_id === this.player.id);
-        },
-        currentRoundHole() {
-            return this.roundHoles[this.holeIndex];
-        }
+        // currentRoundHole() {
+        //     return this.roundHoles.find(x => x.hole_id === this.currentHole.id && x.round_id === this.currentRound.id);
+        // }
     },
-    watch: {
-        holeIndex(oldVal) {
-            console.log(this.holeIndex);
-            this.setRoundHole({ roundHole: this.roundHole, index: oldVal });
-            this.handleRoundHole();
-        }
-    }
+    // watch: {
+    //     holeIndex(oldVal) {
+    //         console.log(this.holeIndex);
+    //         this.setRoundHole({ roundHole: this.roundHole, holeId: this.currentHole.id });
+    //         this.handleRoundHole();
+    //     }
+    // }
 }
 </script>
 

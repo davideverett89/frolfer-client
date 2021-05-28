@@ -6,11 +6,11 @@
                 <v-col></v-col>
             </v-row>
             <PlayerInterface
-                v-for="(player, index) in players"
+                v-for="(round, index) in rounds"
                 :key="index"
-                :player="player"
+                :round="round"
                 :currentHole="currentHole"
-             />
+                />
             <v-row class="my-5">
                 <v-col class="d-flex flex-row justify-content-around align-items-center">
                     <v-btn
@@ -46,14 +46,14 @@ export default {
         HoleInfoBanner,
         PlayerInterface,
     },
-    created() {
+    mounted() {
         this.fetchHoles({ course: this.course.id });
     },
     computed: {
         ...mapGetters({
             currentHole: 'hole/currentHole',
             course: 'course/course',
-            players: 'player/players'
+            rounds: 'round/rounds'
         }),
     },
     methods: {
