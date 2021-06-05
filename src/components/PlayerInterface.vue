@@ -3,7 +3,7 @@
         <v-col cols="10" class="text-left p-4">
             <h2>{{ round.player.user.first_name.toUpperCase() || round.player.user.username.toUpperCase() }} {{ round.player.user.last_name }}</h2>
             <div class="d-flex justify-content-start align-items-center">
-                ({{ round.total_strokes }})
+                <p>({{ round.total_strokes }})</p>
             </div>
         </v-col>
         <v-col cols="2" class="p-4">
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         ...mapMutations({
-            setRoundHole: `roundHole/${SET_ROUND_HOLE}`
+            setRoundHole: `roundHole/${SET_ROUND_HOLE}`,
         }),
         handleClick(command) {
             if (this.roundHole.strokes === 0) {
@@ -72,10 +72,9 @@ export default {
             if (this.currentRoundHole !== undefined) {
                 this.roundHole = this.currentRoundHole;
             } else {
-                console.log('Hello!!!!');
                 this.roundHole = {
-                    round_id: this.round.id || 0,
-                    hole_id: this.currentHole.id || 0,
+                    round_id: this.round.id,
+                    hole_id: this.currentHole.id,
                     strokes: 0
                 }
             }
@@ -86,17 +85,16 @@ export default {
             holeIndex: 'hole/holeIndex',
             roundHoles: 'roundHole/roundHoles'
         }),
-        // currentRoundHole() {
-        //     return this.roundHoles.find(x => x.hole_id === this.currentHole.id && x.round_id === this.currentRound.id);
-        // }
+        currentRoundHole() {
+            return this.roundHoles[this.round.id][this.holeIndex];
+        }
     },
-    // watch: {
-    //     holeIndex(oldVal) {
-    //         console.log(this.holeIndex);
-    //         this.setRoundHole({ roundHole: this.roundHole, holeId: this.currentHole.id });
-    //         this.handleRoundHole();
-    //     }
-    // }
+    watch: {
+        holeIndex(newVal, oldVal) {
+            this.setRoundHole({ roundId: this.round.id, holeIndex: oldVal, payload: this.roundHole });
+            this.handleRoundHole();
+        }
+    }
 }
 </script>
 

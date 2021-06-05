@@ -12,7 +12,7 @@ const round = {
     mutations: {
         [SET_ROUNDS](state, payload) {
             state.rounds = payload;
-        }
+        },
     },
     actions: {
         async [CREATE_ROUNDS]({ dispatch, commit }, { selectedPlayers, score_card_id }) {

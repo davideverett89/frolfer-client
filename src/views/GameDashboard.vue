@@ -1,6 +1,6 @@
 <template>
     <v-col>
-        <v-container class="GameDashboard">
+        <v-container v-if="currentHole" class="GameDashboard">
             <HoleInfoBanner class="my-5" :currentHole="currentHole" />
             <v-row>
                 <v-col></v-col>
