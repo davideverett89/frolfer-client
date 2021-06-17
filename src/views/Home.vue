@@ -57,7 +57,6 @@ export default {
         }),
         handleStartGame() {
             this.$refs.modal.toggle();
-            console.log('Starting game...');
             this.$router.push('/dashboard');
         }
     },

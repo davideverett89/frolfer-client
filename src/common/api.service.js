@@ -101,6 +101,14 @@ export const ScorecardService = {
     } catch (error) {
       throw new Error(`The following error occurred while getting all score cards: ${error}`);
     }
+  },
+  createScorecard: async (payload) => {
+    try {
+      const { data } = await ApiService.post('score_cards', payload);
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while creating a score card`);
+    }
   }
 }
 
@@ -122,6 +130,36 @@ export const PlayerService = {
       return data;
     } catch (error) {
       throw new Error(`The following error occurred while getting all score cards: ${error}`);
+    }
+  }
+}
+
+export const HoleService = {
+  getAll: async () => {
+    try {
+      const { data } = await ApiService.get('holes');
+      return data;
+    } catch (error) {
+      throw new Error(`The following error occurred while getting all holes: ${error}`);
+    }
+  },
+  getHolesByCourseId: async (params) => {
+    try {
+      const { data } = await ApiService.query('holes', { params: params });
+      return data;
+    } catch(error) {
+      throw new Error(`The following error occurred while getting holes by course_id: ${error}`);
+    }
+  }
+}
+
+export const RoundService = {
+  createRound: async (payload) => {
+    try {
+      const { data } = await ApiService.post('rounds', payload);
+      return data;
+    } catch(error) {
+      throw new Error(`The following error occurred while creating a round: ${error}`);
     }
   }
 }

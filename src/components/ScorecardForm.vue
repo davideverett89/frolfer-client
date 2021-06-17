@@ -121,13 +121,13 @@
 </template>
 
 <script>
-import DateTime from 'luxon/src/datetime.js'
+// import DateTime from 'luxon/src/datetime.js' < -- Might have to uninstall
 
 import { mapActions, mapMutations, mapGetters } from 'vuex';
 
-import { FETCH_COURSES, FETCH_PLAYERS } from '../store/actions.type';
+import { FETCH_COURSES, FETCH_PLAYERS, CREATE_SCORECARD } from '../store/actions.type';
 
-import { SET_COURSE, SET_SCORECARD, RESET, SET_ROUNDS } from '../store/mutations.type';
+import { SET_COURSE, RESET } from '../store/mutations.type';
 
 import RadioButtonGroup from '../components/RadioButtonGroup';
 import CheckboxGroup from '../components/CheckboxGroup';
@@ -157,24 +157,12 @@ export default {
         this.resetPlayers();
     },
     methods: {
-        handleComplete() {
+        async handleComplete() {
             this.scorecard.course_id = this.selectedCourse.id;
-            this.scorecard.start_time = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-            this.scorecard.end_time = '';
             this.scorecard.condition = '';
-            this.setScorecard(this.scorecard);
-            this.setRounds(this.handleCreateRounds());
+            await this.createScorecard({ score_card: this.scorecard, selectedPlayers: this.selectedPlayers });
             this.setCourse(this.selectedCourse);
             this.$emit('start');
-        },
-        handleCreateRounds() {
-            return this.selectedPlayers.map(x => {
-                const round = {
-                    player_id: x.id,
-                    score: 0
-                }
-                return round;
-            })
         },
         handleCheckboxChange(selections) {
             this.selectedPlayers = selections;
@@ -184,20 +172,20 @@ export default {
         },
         ...mapActions({
             fetchCources: `course/${FETCH_COURSES}`,
-            fetchPlayers: `player/${FETCH_PLAYERS}`
+            fetchPlayers: `player/${FETCH_PLAYERS}`,
+            createScorecard: `home/${CREATE_SCORECARD}`,
         }),
         ...mapMutations({ 
-            setScorecard: `home/${SET_SCORECARD}`,
             setCourse: `course/${SET_COURSE}`,
             resetCourses: `course/${RESET}`,
             resetPlayers: `player/${RESET}`,
-            setRounds: `round/${SET_ROUNDS}`,
         })
     },
     computed: {
         ...mapGetters({
             courses: 'course/courses',
-            players: 'player/players'
+            players: 'player/players',
+            newScorecard: 'home/scorecard'
         }),
     }
 }
